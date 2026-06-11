@@ -1,5 +1,14 @@
 # 归她 - 云函数部署流程
 
+## 云函数提交规范（MVP 阶段）
+
+1. TypeScript 源码文件是 `index.ts`。
+2. 云函数运行文件是编译后的 `index.js`。
+3. 当前 MVP 阶段允许提交 `index.js`。
+4. 每次修改任意 `cloudfunctions/*/index.ts` 后，必须重新运行 `tsc` 编译生成对应 `index.js`。
+5. 提交时必须保证 `index.ts` 和 `index.js` 同步。
+6. 不允许手动编辑 `index.js`，`index.js` 只能由 TypeScript 编译生成。
+
 ## 环境信息
 
 - **云环境 ID**: `cloud1-d2gplb1ikea96e2c8`
