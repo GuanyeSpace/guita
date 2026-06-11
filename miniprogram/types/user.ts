@@ -11,4 +11,4 @@ export interface User {
   updated_at: string
 }
 
-export type DbUserStatus = 'active' | 'inactive' | 'banned'
+export type DbUserStatus = 'active' | 'inactive' | 'deleted' | 'banned'

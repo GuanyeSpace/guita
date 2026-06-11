@@ -61,11 +61,8 @@ async function handleLogin() {
     user = userRes.data[0]
   }
 
-  if (user.status === 'inactive') {
+  if (user.status === 'inactive' || user.status === 'banned' || user.status === 'deleted') {
     return { code: 0, message: 'ok', data: { user, status: 'inactive' } }
-  }
-  if (user.status === 'banned') {
-    return { code: 0, message: 'ok', data: { user, status: 'banned' } }
   }
 
   if (!user.phone) {
