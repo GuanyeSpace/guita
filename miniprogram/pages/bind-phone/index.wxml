@@ -1,3 +1,25 @@
 <view class="container">
-  <text class="placeholder">手机号绑定页</text>
+  <view class="card">
+    <text class="title">绑定手机号</text>
+    <text class="desc">为了帮你保存回放、食谱和后续服务记录，请先绑定手机号。</text>
+
+    <button
+      class="bind-btn"
+      wx:if="{{!loading}}"
+      open-type="getPhoneNumber"
+      bindgetphonenumber="onGetPhoneNumber"
+    >
+      一键绑定手机号
+    </button>
+
+    <view wx:if="{{loading}}" class="loading-box">
+      <text class="loading-text">正在绑定...</text>
+    </view>
+
+    <view wx:if="{{error}}" class="error-box">
+      <text class="error-text">{{error}}</text>
+    </view>
+
+    <text class="agreement">点击即表示你已阅读并同意《用户协议》《隐私政策》</text>
+  </view>
 </view>

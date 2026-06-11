@@ -81,6 +81,64 @@ async function handleLogin() {
   return { code: 0, message: 'ok', data: { user, status: 'ready' } }
 }
 
+async function handleBindPhone(payload?: Record<string, unknown>) {
+  const wxContext = cloud.getWXContext()
+  const openid = wxContext.OPENID
+
+  if (!openid) {
+    return { code: 40001, message: '获取用户信息失败', data: null }
+  }
+
+  const code = payload?.code as string | undefined
+  if (!code) {
+    return { code: 40010, message: '手机号授权失败', data: null }
+  }
+
+  const userRes = await db.collection('users').where({ openid }).get()
+
+  if (userRes.data.length === 0) {
+    return { code: 40011, message: '用户不存在，请重新登录', data: null }
+  }
+
+  const user = userRes.data[0]
+
+  if (user.status === 'inactive' || user.status === 'banned' || user.status === 'deleted') {
+    return { code: 40012, message: '当前账号暂不可用', data: null }
+  }
+
+  let phoneNumber: string
+  try {
+    const result = await cloud.openapi.phonenumber.getPhoneNumber({ code })
+    phoneNumber = (result as any).phoneInfo?.phoneNumber as string
+    if (!phoneNumber) {
+      return { code: 40013, message: '手机号解析失败', data: null }
+    }
+  } catch (e) {
+    console.error('getPhoneNumber error:', e)
+    return { code: 40013, message: '手机号解析失败', data: null }
+  }
+
+  const now = new Date()
+  await db.collection('users').doc(user._id).update({
+    data: {
+      phone: phoneNumber,
+      updated_at: now,
+    },
+  })
+
+  user.phone = phoneNumber
+  user.updated_at = now
+
+  return {
+    code: 0,
+    message: 'ok',
+    data: {
+      status: 'need_host',
+      user,
+    },
+  }
+}
+
 exports.main = async (event: CloudFunctionEvent) => {
   const { action, payload } = event
 
@@ -88,6 +146,8 @@ exports.main = async (event: CloudFunctionEvent) => {
     switch (action) {
       case 'login':
         return await handleLogin()
+      case 'bindPhone':
+        return await handleBindPhone(payload)
       default:
         return { code: 40004, message: `未知操作: ${action}`, data: null }
     }

@@ -28,3 +28,8 @@ export interface LoginData {
   user: Record<string, unknown>
   status: LoginStatus
 }
+
+export interface BindPhoneData {
+  user: Record<string, unknown>
+  status: 'need_host'
+}
