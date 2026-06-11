@@ -6,9 +6,9 @@ export interface User {
   phone: string
   nickname: string
   avatar_url: string
-  status: UserStatus
+  status: DbUserStatus
   created_at: string
   updated_at: string
 }
 
-export type UserStatus = 'need_phone' | 'need_host' | 'ready' | 'inactive' | 'banned'
+export type DbUserStatus = 'active' | 'inactive' | 'banned'

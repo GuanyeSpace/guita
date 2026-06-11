@@ -21,3 +21,10 @@ export interface PaginatedData<T> {
   page: number
   page_size: number
 }
+
+export type LoginStatus = 'need_phone' | 'need_host' | 'ready' | 'inactive' | 'banned'
+
+export interface LoginData {
+  user: Record<string, unknown>
+  status: LoginStatus
+}

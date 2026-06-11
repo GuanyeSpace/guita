@@ -1,3 +1,14 @@
 <view class="container">
-  <text class="placeholder">登录分发页</text>
+  <view wx:if="{{loading}}" class="center">
+    <text class="loading-text">正在进入归她...</text>
+  </view>
+
+  <view wx:elif="{{error}}" class="center">
+    <text class="error-text">{{error}}</text>
+    <button class="retry-btn" bindtap="onRetry">重试</button>
+  </view>
+
+  <view wx:elif="{{accountBlocked}}" class="center">
+    <text class="blocked-text">当前账号暂不可用，如有疑问请联系工作人员。</text>
+  </view>
 </view>
