@@ -1,0 +1,9 @@
+{
+  "name": "event",
+  "version": "1.0.0",
+  "description": "Event tracking cloud function",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

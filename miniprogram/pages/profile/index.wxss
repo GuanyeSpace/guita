@@ -1,0 +1,89 @@
+/* pages/profile/index.wxss */
+.profile-page {
+  min-height: 100vh;
+  background: var(--color-bg);
+}
+
+.content-wrap {
+  padding-bottom: 40rpx;
+}
+
+/* 用户卡片 */
+.user-card {
+  display: flex;
+  align-items: center;
+  background: var(--color-primary);
+  padding: 60rpx 40rpx 40rpx;
+  margin-bottom: 20rpx;
+}
+
+.user-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 60rpx;
+  border: 4rpx solid rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
+}
+
+.user-info {
+  margin-left: 30rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.nickname {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-bottom: 10rpx;
+}
+
+.guita-id {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* 信息列表 */
+.info-list {
+  margin: 0 30rpx;
+  background: var(--color-white);
+  border-radius: 16rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
+}
+
+.info-item {
+  display: flex;
+  padding: 30rpx;
+  border-bottom: 1rpx solid var(--color-border);
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.label {
+  font-size: 28rpx;
+  color: var(--color-text-muted);
+  min-width: 140rpx;
+  flex-shrink: 0;
+}
+
+.value {
+  font-size: 28rpx;
+  color: var(--color-text);
+}
+
+.value.desc {
+  line-height: 1.4;
+}
+
+/* 版本号 */
+.version {
+  display: flex;
+  justify-content: center;
+  padding: 40rpx 0;
+  font-size: 24rpx;
+  color: var(--color-text-muted);
+}

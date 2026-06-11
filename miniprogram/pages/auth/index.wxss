@@ -1,0 +1,79 @@
+/* pages/auth/index.wxss */
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #FFF3E6 0%, #FFFFFF 100%);
+}
+
+.auth-content {
+  width: 100%;
+  padding: 0 60rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 80rpx;
+}
+
+.logo {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 80rpx;
+  background: var(--color-accent);
+  margin-bottom: 30rpx;
+}
+
+.app-name {
+  font-size: 52rpx;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-bottom: 16rpx;
+}
+
+.slogan {
+  font-size: 28rpx;
+  color: var(--color-text-muted);
+}
+
+.loading-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.loading-text {
+  font-size: 28rpx;
+  color: var(--color-text-muted);
+}
+
+.error-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.error-text {
+  font-size: 28rpx;
+  color: var(--color-text-secondary);
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.retry-btn {
+  width: 240rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  background: var(--color-primary);
+  color: #FFFFFF;
+  font-size: 28rpx;
+  border-radius: 40rpx;
+}

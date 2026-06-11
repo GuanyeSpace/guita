@@ -1,0 +1,58 @@
+<!-- pages/host-select/index.wxml -->
+<view class="host-select-page">
+  <view class="header">
+    <text class="title">选择你的运动陪伴老师</text>
+    <text class="subtitle">绑定后，小程序将展示这位老师的内容</text>
+  </view>
+
+  <view wx:if="{{loading}}" class="loading-container">
+    <text class="loading-text">正在加载...</text>
+  </view>
+
+  <view wx:elif="{{error}}" class="error-container">
+    <text class="error-text">{{error}}</text>
+    <view class="retry-btn" bind:tap="loadHosts">重新加载</view>
+  </view>
+
+  <view wx:elif="{{hosts.length === 0}}" class="empty-state">
+    <text class="empty-text">暂无可选主播</text>
+  </view>
+
+  <view wx:else class="host-list">
+    <view
+      wx:for="{{hosts}}" wx:key="_id"
+      class="host-card {{selectedId === item._id ? 'selected' : ''}}"
+      data-id="{{item._id}}" bind:tap="onSelectHost"
+    >
+      <image class="host-avatar" src="{{item.avatar_url || item.avatar_file_id || '/images/avatar.png'}}" mode="aspectFill" />
+      <view class="host-info">
+        <text class="host-name">{{item.display_name}}</text>
+        <text class="host-desc">{{item.description}}</text>
+        <text class="host-target">适合：{{item.target_user}}</text>
+      </view>
+      <view class="checkbox {{selectedId === item._id ? 'checked' : ''}}">
+        <text wx:if="{{selectedId === item._id}}">✓</text>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{hosts.length > 0}}" class="bottom-bar">
+    <button class="btn-primary" disabled="{{!selectedId || loading}}" bind:tap="onConfirm">
+      确认选择
+    </button>
+  </view>
+
+  <!-- 二次确认弹窗 -->
+  <view wx:if="{{showConfirm}}" class="modal-mask" bind:tap="onCancelConfirm">
+    <view class="modal-content" catch:tap="">
+      <text class="modal-title">确认选择</text>
+      <text class="modal-text">
+        你将绑定「{{confirmHost.display_name}}」。\n\n绑定后，小程序会展示这位老师的直播回放和食谱内容。\n当前版本暂不支持自行更换主播，请确认选择。
+      </text>
+      <view class="modal-buttons">
+        <button class="btn-cancel" bind:tap="onCancelConfirm">再想想</button>
+        <button class="btn-confirm" loading="{{binding}}" bind:tap="onConfirmBind">确认绑定</button>
+      </view>
+    </view>
+  </view>
+</view>

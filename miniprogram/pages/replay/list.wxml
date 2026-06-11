@@ -1,0 +1,29 @@
+<!-- pages/replay/list.wxml -->
+<view class="replay-list-page">
+  <view wx:if="{{loading}}" class="loading-container">
+    <text class="loading-text">正在加载...</text>
+  </view>
+
+  <view wx:elif="{{error && list.length === 0}}" class="error-container">
+    <text class="error-text">{{error}}</text>
+    <view class="retry-btn" bind:tap="onRetry">重新加载</view>
+  </view>
+
+  <view wx:elif="{{list.length === 0}}" class="empty-state">
+    <text class="empty-text">暂无回放内容</text>
+  </view>
+
+  <view wx:else class="content-list">
+    <view wx:for="{{list}}" wx:key="_id" class="content-card card" data-id="{{item._id}}" bind:tap="onReplayTap">
+      <image class="content-cover" src="{{item.cover_url || item.cover_file_id || '/images/default-goods-image.png'}}" mode="aspectFill" />
+      <view class="content-info">
+        <text class="content-title">{{item.title}}</text>
+        <text class="content-desc">{{item.description}}</text>
+        <text class="content-duration" wx:if="{{item.duration_sec}}">时长：{{item.duration_sec > 3600 ? '超过1小时' : item.duration_sec / 60 + '分钟'}}</text>
+        <text class="content-time">{{item.published_at}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{list.length > 0 && error}}" class="error-tip">{{error}}</view>
+</view>

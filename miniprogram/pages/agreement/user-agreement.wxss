@@ -1,0 +1,35 @@
+.agreement-page {
+  padding: 32rpx 40rpx 60rpx;
+  background: #FFFFFF;
+  min-height: 100vh;
+}
+.title {
+  display: block;
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #333333;
+  text-align: center;
+  margin-bottom: 12rpx;
+}
+.update-date {
+  display: block;
+  font-size: 24rpx;
+  color: #999999;
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+.section-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-top: 32rpx;
+  margin-bottom: 16rpx;
+}
+.paragraph {
+  display: block;
+  font-size: 28rpx;
+  color: #666666;
+  line-height: 44rpx;
+  margin-bottom: 12rpx;
+}

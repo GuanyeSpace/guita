@@ -1,0 +1,130 @@
+/* pages/home/index.wxss */
+.home-page {
+  min-height: 100vh;
+  background: var(--color-bg);
+  padding-bottom: 40rpx;
+}
+
+/* 主播信息 */
+.host-header {
+  display: flex;
+  align-items: center;
+  margin: 30rpx;
+  padding: 30rpx;
+}
+
+.host-avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50rpx;
+  background: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.host-info {
+  margin-left: 24rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.host-name {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 8rpx;
+}
+
+.host-desc {
+  font-size: 26rpx;
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}
+
+/* 内容区域 */
+.section {
+  margin: 0 30rpx 30rpx;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+  padding: 0 4rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.section-more {
+  font-size: 26rpx;
+  color: var(--color-primary);
+}
+
+.section-empty {
+  padding: 60rpx 0;
+  text-align: center;
+}
+
+.empty-text {
+  font-size: 26rpx;
+  color: var(--color-text-muted);
+}
+
+/* 内容卡片 */
+.content-card {
+  display: flex;
+}
+
+.content-cover {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 12rpx;
+  flex-shrink: 0;
+  background: var(--color-accent);
+}
+
+.content-info {
+  flex: 1;
+  margin-left: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.content-title {
+  font-size: 30rpx;
+  font-weight: 500;
+  color: var(--color-text);
+  margin-bottom: 8rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.content-desc {
+  font-size: 24rpx;
+  color: var(--color-text-secondary);
+  margin-bottom: 8rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.4;
+}
+
+.content-duration {
+  font-size: 22rpx;
+  color: var(--color-text-muted);
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+}

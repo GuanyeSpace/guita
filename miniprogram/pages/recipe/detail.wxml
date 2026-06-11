@@ -1,0 +1,31 @@
+<!-- pages/recipe/detail.wxml -->
+<view class="recipe-detail-page">
+  <view wx:if="{{loading}}" class="loading-container">
+    <text class="loading-text">正在加载...</text>
+  </view>
+
+  <view wx:elif="{{error}}" class="error-container">
+    <text class="error-text">{{error}}</text>
+    <view class="retry-btn" bind:tap="onRetry">重新加载</view>
+  </view>
+
+  <view wx:elif="{{content}}" class="content-wrap">
+    <image class="cover" src="{{content.cover_url || content.cover_file_id || '/images/default-goods-image.png'}}" mode="aspectFill" />
+
+    <view class="info-section">
+      <text class="detail-title">{{content.title}}</text>
+      <view wx:if="{{content.tags && content.tags.length > 0}}" class="tag-list">
+        <text wx:for="{{content.tags}}" wx:key="*this" wx:for-item="tag" class="tag">{{tag}}</text>
+      </view>
+      <text class="detail-desc">{{content.description}}</text>
+
+      <button class="btn-primary view-btn" bind:tap="onViewFile">
+        查看食谱
+      </button>
+    </view>
+
+    <view class="disclaimer">
+      本小程序提供的内容仅作参考，不构成医疗建议。
+    </view>
+  </view>
+</view>

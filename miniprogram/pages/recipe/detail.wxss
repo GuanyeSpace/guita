@@ -1,0 +1,46 @@
+/* pages/recipe/detail.wxss */
+.recipe-detail-page {
+  min-height: 100vh;
+  background: var(--color-bg);
+}
+
+.cover {
+  width: 100%;
+  height: 500rpx;
+  background: var(--color-accent);
+}
+
+.info-section {
+  padding: 30rpx;
+  background: var(--color-white);
+  border-radius: 24rpx 24rpx 0 0;
+  margin-top: -30rpx;
+  position: relative;
+  min-height: 50vh;
+}
+
+.detail-title {
+  display: block;
+  font-size: 36rpx;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 16rpx;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20rpx;
+}
+
+.detail-desc {
+  display: block;
+  font-size: 28rpx;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-bottom: 40rpx;
+}
+
+.view-btn {
+  margin-top: 20rpx;
+}

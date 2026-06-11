@@ -1,0 +1,40 @@
+<!-- pages/preview/index.wxml -->
+<view class="preview-page">
+  <!-- 加载态 -->
+  <view wx:if="{{loading}}" class="loading-container">
+    <text class="loading-text">正在加载...</text>
+  </view>
+
+  <!-- 错误态 -->
+  <view wx:elif="{{error}}" class="error-container">
+    <text class="error-text">{{error}}</text>
+    <view class="retry-btn" bind:tap="onRetry">重试</view>
+  </view>
+
+  <!-- 图片预览 -->
+  <view wx:elif="{{fileType === 'image' && fileUrl}}" class="image-area">
+    <image
+      class="preview-image"
+      src="{{fileUrl}}"
+      mode="widthFix"
+      show-menu-by-longpress
+      bind:error="onImageError"
+    />
+  </view>
+
+  <!-- PDF -->
+  <view wx:elif="{{fileType === 'pdf'}}" class="pdf-area">
+    <text class="pdf-hint">PDF 文件已打开，若未自动打开请点击下方按钮</text>
+    <button class="btn-primary" bind:tap="loadFile">重新打开文件</button>
+  </view>
+
+  <!-- 未知类型 -->
+  <view wx:else class="unknown-area">
+    <text>暂不支持预览此文件类型</text>
+  </view>
+
+  <!-- 免责声明 -->
+  <view class="disclaimer">
+    本小程序提供的内容仅作参考，不构成医疗建议。
+  </view>
+</view>
