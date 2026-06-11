@@ -25,27 +25,19 @@
     "list": [
       {
         "pagePath": "pages/home/index",
-        "text": "首页",
-        "iconPath": "images/tabbar/home.png",
-        "selectedIconPath": "images/tabbar/home-active.png"
+        "text": "首页"
       },
       {
         "pagePath": "pages/replay/list/index",
-        "text": "回放",
-        "iconPath": "images/tabbar/replay.png",
-        "selectedIconPath": "images/tabbar/replay-active.png"
+        "text": "回放"
       },
       {
         "pagePath": "pages/recipe/list/index",
-        "text": "食谱",
-        "iconPath": "images/tabbar/recipe.png",
-        "selectedIconPath": "images/tabbar/recipe-active.png"
+        "text": "食谱"
       },
       {
         "pagePath": "pages/profile/index",
-        "text": "我的",
-        "iconPath": "images/tabbar/profile.png",
-        "selectedIconPath": "images/tabbar/profile-active.png"
+        "text": "我的"
       }
     ]
   },
