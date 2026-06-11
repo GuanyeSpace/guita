@@ -1,0 +1,30 @@
+{
+  "envId": "cloud1-d2gplb1ikea96e2c8",
+  "functionRoot": "cloudfunctions",
+  "functions": [
+    {
+      "name": "auth",
+      "timeout": 10,
+      "runtime": "Nodejs20.19",
+      "handler": "index.main"
+    },
+    {
+      "name": "content",
+      "timeout": 10,
+      "runtime": "Nodejs20.19",
+      "handler": "index.main"
+    },
+    {
+      "name": "event",
+      "timeout": 10,
+      "runtime": "Nodejs20.19",
+      "handler": "index.main"
+    },
+    {
+      "name": "host",
+      "timeout": 10,
+      "runtime": "Nodejs20.19",
+      "handler": "index.main"
+    }
+  ]
+}

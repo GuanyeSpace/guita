@@ -5,7 +5,10 @@
     "module": "CommonJS",
     "moduleResolution": "node",
     "lib": ["ES2017"],
-    "types": []
+    "types": ["node"],
+    "skipLibCheck": true,
+    "noImplicitAny": false,
+    "ignoreDeprecations": "6.0"
   },
   "include": ["./**/*.ts"],
   "exclude": ["node_modules"]
