@@ -1,8 +1,8 @@
 {
-  "name": "content",
+  "name": "cloudfunction-content",
   "version": "1.0.0",
-  "description": "Content cloud function",
-  "main": "index.js",
+  "description": "归她 - 内容管理云函数",
+  "main": "index.ts",
   "dependencies": {
     "wx-server-sdk": "latest"
   }

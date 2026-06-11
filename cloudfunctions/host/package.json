@@ -1,8 +1,8 @@
 {
-  "name": "host",
+  "name": "cloudfunction-host",
   "version": "1.0.0",
-  "description": "Host cloud function",
-  "main": "index.js",
+  "description": "归她 - 主播管理云函数",
+  "main": "index.ts",
   "dependencies": {
     "wx-server-sdk": "latest"
   }

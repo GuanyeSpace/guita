@@ -5,12 +5,7 @@
     "module": "CommonJS",
     "moduleResolution": "node",
     "lib": ["ES2017"],
-    "types": ["miniprogram-api-typings"],
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
-    "sourceMap": true,
-    "allowJs": false
+    "types": []
   },
   "include": ["./**/*.ts"],
   "exclude": ["node_modules"]

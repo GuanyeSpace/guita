@@ -1,38 +1,10 @@
-/* pages/preview/index.wxss */
-.preview-page {
-  min-height: 100vh;
-  background: #FFFFFF;
-}
-
-.image-area {
-  display: flex;
-  justify-content: center;
-}
-
-.preview-image {
-  width: 100%;
-}
-
-.pdf-area {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 100rpx 60rpx;
-}
-
-.pdf-hint {
-  font-size: 28rpx;
-  color: var(--color-text-secondary);
-  text-align: center;
-  margin-bottom: 40rpx;
-}
-
-.unknown-area {
+.container {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 60vh;
-  font-size: 28rpx;
-  color: var(--color-text-muted);
+  height: 100vh;
+}
+.placeholder {
+  font-size: 32rpx;
+  color: #999999;
 }

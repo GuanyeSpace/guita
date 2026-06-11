@@ -1,8 +1,8 @@
 {
-  "name": "auth",
+  "name": "cloudfunction-auth",
   "version": "1.0.0",
-  "description": "Auth cloud function",
-  "main": "index.js",
+  "description": "归她 - 登录认证云函数",
+  "main": "index.ts",
   "dependencies": {
     "wx-server-sdk": "latest"
   }

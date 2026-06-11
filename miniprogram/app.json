@@ -4,55 +4,52 @@
     "pages/bind-phone/index",
     "pages/host-select/index",
     "pages/home/index",
-    "pages/replay/list",
-    "pages/replay/detail",
-    "pages/recipe/list",
-    "pages/recipe/detail",
+    "pages/replay/list/index",
+    "pages/replay/detail/index",
+    "pages/recipe/list/index",
+    "pages/recipe/detail/index",
     "pages/preview/index",
-    "pages/profile/index",
-    "pages/agreement/user-agreement",
-    "pages/agreement/privacy-policy"
+    "pages/profile/index"
   ],
   "window": {
-    "backgroundColor": "#FFF3E6",
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#F28C48",
     "navigationBarTitleText": "归她",
-    "navigationBarTextStyle": "white"
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#F8F6F3"
   },
   "tabBar": {
     "color": "#999999",
-    "selectedColor": "#F28C48",
+    "selectedColor": "#333333",
     "backgroundColor": "#FFFFFF",
-    "borderStyle": "white",
+    "borderStyle": "black",
     "list": [
       {
         "pagePath": "pages/home/index",
         "text": "首页",
-        "iconPath": "images/icons/home.png",
-        "selectedIconPath": "images/icons/home-active.png"
+        "iconPath": "images/tabbar/home.png",
+        "selectedIconPath": "images/tabbar/home-active.png"
       },
       {
-        "pagePath": "pages/replay/list",
+        "pagePath": "pages/replay/list/index",
         "text": "回放",
-        "iconPath": "images/icons/examples.png",
-        "selectedIconPath": "images/icons/examples-active.png"
+        "iconPath": "images/tabbar/replay.png",
+        "selectedIconPath": "images/tabbar/replay-active.png"
       },
       {
-        "pagePath": "pages/recipe/list",
+        "pagePath": "pages/recipe/list/index",
         "text": "食谱",
-        "iconPath": "images/icons/goods.png",
-        "selectedIconPath": "images/icons/goods-active.png"
+        "iconPath": "images/tabbar/recipe.png",
+        "selectedIconPath": "images/tabbar/recipe-active.png"
       },
       {
         "pagePath": "pages/profile/index",
         "text": "我的",
-        "iconPath": "images/icons/usercenter.png",
-        "selectedIconPath": "images/icons/usercenter-active.png"
+        "iconPath": "images/tabbar/profile.png",
+        "selectedIconPath": "images/tabbar/profile-active.png"
       }
     ]
   },
-  "sitemapLocation": "sitemap.json",
   "style": "v2",
+  "sitemapLocation": "sitemap.json",
   "lazyCodeLoading": "requiredComponents"
 }
