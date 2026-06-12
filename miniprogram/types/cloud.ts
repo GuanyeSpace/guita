@@ -33,3 +33,17 @@ export interface BindPhoneData {
   user: Record<string, unknown>
   status: 'need_host'
 }
+
+export interface HostListData {
+  list: Record<string, unknown>[]
+}
+
+export interface HostBindData {
+  host: Record<string, unknown>
+  binding: Record<string, unknown>
+}
+
+export interface GetMyHostData {
+  host: Record<string, unknown>
+  binding: Record<string, unknown>
+}

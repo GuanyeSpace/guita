@@ -1,3 +1,40 @@
 <view class="container">
-  <text class="placeholder">主播选择页</text>
+  <view wx:if="{{loading}}" class="center">
+    <text class="status-text">正在加载老师列表...</text>
+  </view>
+
+  <view wx:elif="{{error}}" class="center">
+    <text class="error-text">{{error}}</text>
+    <button class="retry-btn" bindtap="onRetry">重试</button>
+  </view>
+
+  <view wx:elif="{{hosts.length === 0}}" class="center">
+    <text class="status-text">暂时没有可选择的老师，请稍后再试。</text>
+  </view>
+
+  <view wx:else class="content">
+    <text class="title">选择你的老师</text>
+    <text class="desc">请选择 1 位老师。绑定后，小程序会展示这位老师的直播回放和食谱内容。</text>
+
+    <view
+      wx:for="{{hosts}}"
+      wx:key="_id"
+      class="host-card"
+      data-host="{{item}}"
+      bindtap="onSelectHost"
+    >
+      <view class="avatar" style="background-color: {{item.brand_color_accent || '#F0F0F0'}}">
+        <text class="avatar-text">{{item.display_name[0] || '?'}}</text>
+      </view>
+      <view class="card-body">
+        <text class="card-name">{{item.display_name}}</text>
+        <text class="card-desc">{{item.description}}</text>
+        <text class="card-target">适合：{{item.target_user}}</text>
+      </view>
+    </view>
+
+    <view wx:if="{{submitting}}" class="submit-tip">
+      <text class="status-text">正在绑定...</text>
+    </view>
+  </view>
 </view>
