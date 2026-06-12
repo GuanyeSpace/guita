@@ -23,7 +23,7 @@ Page({
         name: 'host',
         action: 'listActive',
       })
-      this.setData({ loading: false, hosts: res.data.list as Host[] })
+      this.setData({ loading: false, hosts: res.data.list as unknown as Host[] })
     } catch (e) {
       const msg = (e as Error).message || '刚刚网络有点慢，再试一次好么？'
       this.setData({ loading: false, error: msg })
