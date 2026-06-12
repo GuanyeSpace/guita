@@ -1,3 +1,51 @@
 <view class="container">
-  <text class="placeholder">回放列表页</text>
+  <view wx:if="{{loading}}" class="center">
+    <text class="status-text">正在加载回放...</text>
+  </view>
+
+  <view wx:elif="{{error}}" class="center">
+    <text class="error-text">{{error}}</text>
+    <button class="retry-btn" bindtap="onRetry">重试</button>
+  </view>
+
+  <block wx:else>
+    <view class="header">
+      <text class="header-title">直播回放</text>
+      <text class="header-desc">这里会展示你当前老师的直播回放。</text>
+    </view>
+
+    <view wx:if="{{list.length === 0}}" class="empty-box">
+      <text class="empty-text">暂时还没有直播回放。</text>
+    </view>
+
+    <view wx:else class="list">
+      <view
+        wx:for="{{list}}"
+        wx:key="_id"
+        class="card"
+        data-id="{{item._id}}"
+        bindtap="onTapItem"
+      >
+        <view class="card-cover">
+          <text class="cover-text">回放</text>
+        </view>
+        <view class="card-body">
+          <text class="card-title">{{item.title}}</text>
+          <text class="card-desc">{{item.description}}</text>
+          <view class="card-meta">
+            <text class="meta-text">时长：{{formatDuration(item.duration_sec)}}</text>
+            <text class="meta-text">{{formatDate(item.published_at)}}</text>
+          </view>
+          <view wx:if="{{item.tags && item.tags.length}}" class="tags">
+            <text wx:for="{{item.tags}}" wx:key="*this" wx:for-item="tag" class="tag">{{tag}}</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="load-more">
+        <text wx:if="{{loadingMore}}" class="status-text">正在加载更多...</text>
+        <text wx:elif="{{!hasMore}}" class="status-text">已经到底啦。</text>
+      </view>
+    </view>
+  </block>
 </view>
