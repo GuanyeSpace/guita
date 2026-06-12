@@ -19,13 +19,17 @@ Page({
   },
 
   onShow() {
-    if (!this.data.user) {
-      this.loadProfile()
-    }
+    this.loadProfile()
   },
 
   async loadProfile() {
-    this.setData({ loading: true, error: '', blocked: false })
+    this.setData({
+      loading: true,
+      error: '',
+      blocked: false,
+      host: null,
+      binding: null,
+    })
 
     try {
       const loginRes = await callFunction<LoginData>({
@@ -49,6 +53,11 @@ Page({
         return
       }
 
+      if (status === 'need_host') {
+        this.setData({ loading: false })
+        return
+      }
+
       if (status === 'ready') {
         try {
           const hostRes = await callFunction<GetMyHostData>({
@@ -59,8 +68,14 @@ Page({
             host: hostRes.data.host as Record<string, unknown>,
             binding: hostRes.data.binding as Record<string, unknown>,
           })
-        } catch (_) {
-          // host = null is OK for need_host
+        } catch (e) {
+          const msg = (e as Error).message || ''
+          if (msg.includes('暂未绑定')) {
+            this.setData({ loading: false })
+          } else {
+            this.setData({ loading: false, error: '刚刚网络有点慢，再试一次好么？' })
+          }
+          return
         }
       }
 
