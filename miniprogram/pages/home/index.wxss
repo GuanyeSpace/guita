@@ -1,10 +1,166 @@
 .container {
+  min-height: 100vh;
+  background-color: #F8F6F3;
+}
+.center {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
 }
-.placeholder {
-  font-size: 32rpx;
+.content {
+  padding: 0 40rpx;
+  box-sizing: border-box;
+}
+.host-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60rpx 0 40rpx;
+}
+.host-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20rpx;
+}
+.host-avatar-text {
+  font-size: 48rpx;
+  font-weight: 600;
+  color: #333333;
+}
+.host-name {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 12rpx;
+}
+.host-desc {
+  font-size: 26rpx;
+  color: #666666;
+  text-align: center;
+  line-height: 1.5;
+  margin-bottom: 8rpx;
+}
+.host-target {
+  font-size: 24rpx;
   color: #999999;
+}
+.section {
+  margin-bottom: 40rpx;
+}
+.section-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 20rpx;
+}
+.card {
+  display: flex;
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+}
+.card-cover {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 12rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.replay-cover {
+  background-color: #E8F0FE;
+}
+.recipe-cover {
+  background-color: #FFF3E6;
+}
+.cover-placeholder {
+  font-size: 26rpx;
+  color: #999999;
+}
+.card-body {
+  flex: 1;
+  margin-left: 20rpx;
+  display: flex;
+  flex-direction: column;
+}
+.card-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 8rpx;
+}
+.card-desc {
+  font-size: 24rpx;
+  color: #666666;
+  line-height: 1.5;
+  margin-bottom: 8rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.card-meta {
+  display: flex;
+  flex-direction: row;
+  gap: 20rpx;
+}
+.meta-text {
+  font-size: 22rpx;
+  color: #999999;
+}
+.tags {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10rpx;
+}
+.tag {
+  font-size: 20rpx;
+  color: #F28C48;
+  background-color: #FFF3E6;
+  padding: 4rpx 12rpx;
+  border-radius: 4rpx;
+}
+.empty-box {
+  padding: 40rpx 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.empty-text {
+  font-size: 26rpx;
+  color: #CCCCCC;
+}
+.status-text {
+  font-size: 28rpx;
+  color: #999999;
+}
+.error-text {
+  font-size: 28rpx;
+  color: #666666;
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: 40rpx;
+}
+.retry-btn {
+  width: 240rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 28rpx;
+  background-color: #FFFFFF;
+  border: 1rpx solid #DDDDDD;
+  border-radius: 8rpx;
+}
+.bottom-safe {
+  height: 40rpx;
 }

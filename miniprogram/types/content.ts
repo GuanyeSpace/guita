@@ -1,4 +1,4 @@
-export type ContentType = 'replay' | 'recipe'
+export type ContentType = 'live_replay' | 'recipe'
 
 export type ContentCategory = 'daily' | 'special' | 'basics'
 

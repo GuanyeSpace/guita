@@ -47,3 +47,10 @@ export interface GetMyHostData {
   host: Record<string, unknown>
   binding: Record<string, unknown>
 }
+
+export interface ContentListData {
+  list: Record<string, unknown>[]
+  page: number
+  page_size: number
+  total: number
+}

@@ -1,3 +1,81 @@
-<view class="container">
-  <text class="placeholder">首页</text>
-</view>
+<scroll-view scroll-y class="container">
+  <view wx:if="{{loading}}" class="center">
+    <text class="status-text">正在加载首页...</text>
+  </view>
+
+  <view wx:elif="{{error}}" class="center">
+    <text class="error-text">{{error}}</text>
+    <button class="retry-btn" bindtap="onRetry">重试</button>
+  </view>
+
+  <view wx:else class="content">
+    <!-- 主播信息 -->
+    <view class="host-section">
+      <view class="host-avatar" style="background-color: {{host.brand_color_accent || '#F0F0F0'}}">
+        <text class="host-avatar-text">{{host.display_name[0] || '?'}}</text>
+      </view>
+      <text class="host-name">{{host.display_name}}</text>
+      <text class="host-desc">{{host.description}}</text>
+      <text class="host-target">适合：{{host.target_user}}</text>
+    </view>
+
+    <!-- 最新直播回放 -->
+    <view class="section">
+      <text class="section-title">最新直播回放</text>
+      <view wx:if="{{replaysEmpty}}" class="empty-box">
+        <text class="empty-text">暂时还没有直播回放。</text>
+      </view>
+      <view wx:else>
+        <view
+          wx:for="{{replays}}"
+          wx:key="_id"
+          class="card"
+          data-id="{{item._id}}"
+          bindtap="onTapReplay"
+        >
+          <view class="card-cover replay-cover">
+            <text class="cover-placeholder">回放</text>
+          </view>
+          <view class="card-body">
+            <text class="card-title">{{item.title}}</text>
+            <text class="card-desc">{{item.description}}</text>
+            <view class="card-meta">
+              <text class="meta-text">时长：{{formatDuration(item.duration_sec)}}</text>
+              <text class="meta-text">{{formatDate(item.published_at)}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 精选食谱 -->
+    <view class="section">
+      <text class="section-title">精选食谱</text>
+      <view wx:if="{{recipesEmpty}}" class="empty-box">
+        <text class="empty-text">暂时还没有食谱。</text>
+      </view>
+      <view wx:else>
+        <view
+          wx:for="{{recipes}}"
+          wx:key="_id"
+          class="card"
+          data-id="{{item._id}}"
+          bindtap="onTapRecipe"
+        >
+          <view class="card-cover recipe-cover">
+            <text class="cover-placeholder">食谱</text>
+          </view>
+          <view class="card-body">
+            <text class="card-title">{{item.title}}</text>
+            <text class="card-desc">{{item.description}}</text>
+            <view wx:if="{{item.tags && item.tags.length}}" class="tags">
+              <text wx:for="{{item.tags}}" wx:key="*this" wx:for-item="tag" class="tag">{{tag}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="bottom-safe"></view>
+  </view>
+</scroll-view>
