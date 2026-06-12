@@ -120,7 +120,7 @@ async function handleDetail(payload?: Record<string, unknown>) {
   const binding = bindRes.data[0]
 
   const contentType = payload?.content_type as string | undefined
-  if (contentType !== 'live_replay') {
+  if (contentType !== 'live_replay' && contentType !== 'recipe') {
     return { code: 40030, message: '内容类型不正确', data: null }
   }
 
@@ -140,7 +140,7 @@ async function handleDetail(payload?: Record<string, unknown>) {
   if (
     !detail ||
     detail.host_id !== binding.host_id ||
-    detail.content_type !== 'live_replay' ||
+    detail.content_type !== contentType ||
     detail.status !== 'published'
   ) {
     return { code: 40032, message: '内容暂不可访问', data: null }

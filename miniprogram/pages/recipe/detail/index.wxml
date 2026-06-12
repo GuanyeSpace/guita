@@ -1,3 +1,35 @@
 <view class="container">
-  <text class="placeholder">食谱详情页</text>
+  <view wx:if="{{loading}}" class="center">
+    <text class="status-text">正在加载食谱...</text>
+  </view>
+
+  <view wx:elif="{{error}}" class="center">
+    <text class="error-text">{{error}}</text>
+    <button class="retry-btn" bindtap="onRetry">重试</button>
+  </view>
+
+  <view wx:elif="{{inaccessible}}" class="center">
+    <text class="error-text">该内容暂不可访问。</text>
+    <button class="retry-btn" bindtap="onGoBack">返回</button>
+  </view>
+
+  <block wx:else>
+    <view class="info-section">
+      <text class="title">{{detail.title}}</text>
+      <text class="desc">{{detail.description}}</text>
+
+      <view wx:if="{{detail.tags && detail.tags.length}}" class="tags">
+        <text wx:for="{{detail.tags}}" wx:key="*this" wx:for-item="tag" class="tag">{{tag}}</text>
+      </view>
+
+      <text wx:if="{{detail.published_at}}" class="date">{{formatDate(detail.published_at)}}</text>
+    </view>
+
+    <view class="file-section">
+      <button wx:if="{{hasFile}}" class="file-btn" bindtap="onOpenFile">
+        查看食谱文件
+      </button>
+      <text wx:else class="no-file">暂时没有可预览的食谱文件。</text>
+    </view>
+  </block>
 </view>
