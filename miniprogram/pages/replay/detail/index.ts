@@ -1,7 +1,7 @@
-import { callFunction } from '../../utils/request'
-import { redirectToHostSelect, redirectToBindPhone } from '../../utils/route'
-import type { ContentDetailData } from '../../types/cloud'
-import { formatDate, formatDuration } from '../../utils/format'
+import { callFunction } from '../../../utils/request'
+import { redirectToHostSelect, redirectToBindPhone } from '../../../utils/route'
+import type { ContentDetailData } from '../../../types/cloud'
+import { formatDate, formatDuration } from '../../../utils/format'
 
 Page({
   data: {
