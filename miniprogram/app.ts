@@ -7,7 +7,7 @@ App<IAppOption>({
       return;
     }
     wx.cloud.init({
-      env: CLOUD_ENV_ID,
+      env: 'cloud1-d2gplb1ikea96e2c8',
       traceUser: true,
     });
   },
