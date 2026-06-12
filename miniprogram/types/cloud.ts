@@ -54,3 +54,7 @@ export interface ContentListData {
   page_size: number
   total: number
 }
+
+export interface ContentDetailData {
+  detail: Record<string, unknown>
+}
