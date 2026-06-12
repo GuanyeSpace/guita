@@ -100,8 +100,21 @@ Page({
         },
       })
     } else {
-      wx.openDocument({
-        filePath: url,
+      wx.downloadFile({
+        url,
+        success: (res) => {
+          if (res.statusCode === 200 && res.tempFilePath) {
+            wx.openDocument({
+              filePath: res.tempFilePath,
+              showMenu: true,
+              fail: () => {
+                wx.showToast({ title: '暂时无法打开该文件', icon: 'none' })
+              },
+            })
+          } else {
+            wx.showToast({ title: '暂时无法打开该文件', icon: 'none' })
+          }
+        },
         fail: () => {
           wx.showToast({ title: '暂时无法打开该文件', icon: 'none' })
         },
