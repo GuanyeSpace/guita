@@ -1,10 +1,125 @@
 .container {
+  min-height: 100vh;
+  background-color: #F8F6F3;
+  padding: 0 40rpx;
+  box-sizing: border-box;
+}
+.center {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
 }
-.placeholder {
-  font-size: 32rpx;
+.header {
+  padding: 40rpx 0 24rpx;
+}
+.header-title {
+  display: block;
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 8rpx;
+}
+.header-desc {
+  font-size: 26rpx;
   color: #999999;
+}
+.empty-box {
+  padding: 120rpx 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.empty-text {
+  font-size: 28rpx;
+  color: #CCCCCC;
+}
+.card {
+  display: flex;
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+}
+.card-cover {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 12rpx;
+  background-color: #FFF3E6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.cover-text {
+  font-size: 26rpx;
+  color: #999999;
+}
+.card-body {
+  flex: 1;
+  margin-left: 20rpx;
+  display: flex;
+  flex-direction: column;
+}
+.card-title {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 8rpx;
+}
+.card-desc {
+  font-size: 24rpx;
+  color: #666666;
+  line-height: 1.5;
+  margin-bottom: 8rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.tags {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10rpx;
+  margin-bottom: 6rpx;
+}
+.tag {
+  font-size: 20rpx;
+  color: #F28C48;
+  background-color: #FFF3E6;
+  padding: 4rpx 12rpx;
+  border-radius: 4rpx;
+}
+.card-date {
+  font-size: 22rpx;
+  color: #CCCCCC;
+}
+.load-more {
+  padding: 32rpx 0 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.status-text {
+  font-size: 26rpx;
+  color: #CCCCCC;
+}
+.error-text {
+  font-size: 28rpx;
+  color: #666666;
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: 40rpx;
+}
+.retry-btn {
+  width: 240rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 28rpx;
+  background-color: #FFFFFF;
+  border: 1rpx solid #DDDDDD;
+  border-radius: 8rpx;
 }
