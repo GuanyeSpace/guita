@@ -1,5 +1,3 @@
-const CLOUD_ENV_ID = '请替换为你的云开发环境ID';
-
 App<IAppOption>({
   onLaunch() {
     if (!wx.cloud) {
