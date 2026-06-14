@@ -2,6 +2,7 @@ import { callFunction } from '../../utils/request'
 import { switchToHome, redirectToBindPhone } from '../../utils/route'
 import type { Host } from '../../types/host'
 import type { HostListData, HostBindData } from '../../types/cloud'
+import { track } from '../../utils/track'
 
 Page({
   data: {
@@ -13,6 +14,7 @@ Page({
 
   onLoad() {
     this.loadHosts()
+    track('guita.host.select_view')
   },
 
   async loadHosts() {

@@ -2,6 +2,7 @@ import { callFunction } from '../../../utils/request'
 import { redirectToHostSelect, redirectToBindPhone } from '../../../utils/route'
 import type { ContentDetailData } from '../../../types/cloud'
 import { formatDate } from '../../../utils/format'
+import { track } from '../../../utils/track'
 
 Page({
   data: {
@@ -55,6 +56,11 @@ Page({
       }
 
       this.setData({ loading: false, detail, fileUrl, hasFile: !!fileUrl })
+
+      track('guita.content.recipe_open', {
+        host_id: detail.host_id as string,
+        content_id: id,
+      })
     } catch (e) {
       const msg = (e as Error).message || '刚刚网络有点慢，再试一次好么？'
 

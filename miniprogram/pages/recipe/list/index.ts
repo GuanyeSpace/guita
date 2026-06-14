@@ -2,6 +2,7 @@ import { callFunction } from '../../../utils/request'
 import { redirectToHostSelect, redirectToBindPhone } from '../../../utils/route'
 import type { ContentListData } from '../../../types/cloud'
 import { formatDate } from '../../../utils/format'
+import { track } from '../../../utils/track'
 
 Page({
   data: {
@@ -54,6 +55,12 @@ Page({
         total: res.data.total,
         hasMore: list.length < res.data.total,
       })
+
+      if (page === 1) {
+        track('guita.content.recipe_list_view', {
+          host_id: list.length > 0 ? (list[0].host_id as string) : undefined,
+        })
+      }
     } catch (e) {
       const msg = (e as Error).message || '刚刚网络有点慢，再试一次好么？'
 

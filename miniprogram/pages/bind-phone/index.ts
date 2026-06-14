@@ -1,6 +1,7 @@
 import { callFunction } from '../../utils/request'
 import { redirectToHostSelect } from '../../utils/route'
 import type { BindPhoneData } from '../../types/cloud'
+import { track } from '../../utils/track'
 
 Page({
   data: {
@@ -31,6 +32,7 @@ Page({
       })
 
       if (res.data.status === 'need_host') {
+        track('guita.auth.bind_phone_success')
         redirectToHostSelect()
       } else {
         this.setData({ loading: false, error: '当前账号暂不可用，如有疑问请联系工作人员。' })

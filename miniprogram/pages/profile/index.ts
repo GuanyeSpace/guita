@@ -2,6 +2,7 @@ import { callFunction } from '../../utils/request'
 import { redirectToBindPhone, redirectToHostSelect } from '../../utils/route'
 import type { LoginData, GetMyHostData } from '../../types/cloud'
 import { maskPhone } from '../../utils/format'
+import { track } from '../../utils/track'
 
 Page({
   data: {
@@ -80,6 +81,10 @@ Page({
       }
 
       this.setData({ loading: false })
+
+      track('guita.profile.view', {
+        host_id: this.data.host ? (this.data.host._id as string) : undefined,
+      })
     } catch (e) {
       const msg = (e as Error).message || '刚刚网络有点慢，再试一次好么？'
       if (msg.includes('请先绑定手机号')) {

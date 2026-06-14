@@ -1,6 +1,7 @@
 import { callFunction } from '../../utils/request'
 import { redirectToBindPhone, redirectToHostSelect, switchToHome } from '../../utils/route'
 import type { LoginData } from '../../types/cloud'
+import { track } from '../../utils/track'
 
 Page({
   data: {
@@ -37,10 +38,13 @@ Page({
         case 'inactive':
         case 'banned':
           this.setData({ loading: false, accountBlocked: true })
-          break
+          return
         default:
           this.setData({ loading: false, error: '刚刚网络有点慢，再试一次好么？' })
+          return
       }
+
+      track('guita.auth.login_success')
     } catch (e) {
       const msg = (e as Error).message || '刚刚网络有点慢，再试一次好么？'
       this.setData({ loading: false, error: msg })

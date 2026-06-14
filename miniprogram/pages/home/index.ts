@@ -2,6 +2,7 @@ import { callFunction } from '../../utils/request'
 import { redirectToHostSelect, redirectToBindPhone } from '../../utils/route'
 import type { GetMyHostData, ContentListData } from '../../types/cloud'
 import { formatDate, formatDuration } from '../../utils/format'
+import { track } from '../../utils/track'
 
 Page({
   data: {
@@ -59,6 +60,8 @@ Page({
         replaysEmpty: replays.length === 0,
         recipesEmpty: recipes.length === 0,
       })
+
+      track('guita.home.view', { host_id: (host as Record<string, unknown>)._id as string })
     } catch (e) {
       const msg = (e as Error).message || '刚刚网络有点慢，再试一次好么？'
 
