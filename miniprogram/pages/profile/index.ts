@@ -15,10 +15,6 @@ Page({
     blocked: false,
   },
 
-  onLoad() {
-    this.loadProfile()
-  },
-
   onShow() {
     this.loadProfile()
   },

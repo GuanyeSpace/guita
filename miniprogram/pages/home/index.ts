@@ -17,10 +17,6 @@ Page({
     formatDuration,
   },
 
-  onLoad() {
-    this.loadHome()
-  },
-
   onShow() {
     this.loadHome()
   },
