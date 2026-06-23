@@ -1,6 +1,35 @@
+/* 归她 - Design Tokens */
+/* 主色：温暖橙色 #E98B4A */
+/* 辅助色：浅橙 #FFF3E6 / 浅蓝 #E8F0FE / 浅灰 #F5F5F5 */
+/* 背景色：暖白浅米 #F8F6F3 */
+
 page {
   background-color: #F8F6F3;
   font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', sans-serif;
-  color: #333333;
+  color: #2C2C2C;
   font-size: 28rpx;
+  --color-primary: #E98B4A;
+  --color-primary-bg: #FFF3E6;
+  --color-primary-light: #FDF6EE;
+  --color-text: #2C2C2C;
+  --color-text-secondary: #666666;
+  --color-text-tertiary: #999999;
+  --color-text-placeholder: #CCCCCC;
+  --color-border: #EEEEEE;
+  --color-bg-card: #FFFFFF;
+  --color-bg-page: #F8F6F3;
+  --color-error: #D94F4F;
+  --color-error-bg: #FFF5F5;
+  --color-success: #52C41A;
+  --radius-sm: 6rpx;
+  --radius-md: 12rpx;
+  --radius-lg: 16rpx;
+  --radius-xl: 20rpx;
+  --shadow-card: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
+  --spacing-xs: 8rpx;
+  --spacing-sm: 12rpx;
+  --spacing-md: 16rpx;
+  --spacing-lg: 24rpx;
+  --spacing-xl: 32rpx;
+  --spacing-xxl: 40rpx;
 }

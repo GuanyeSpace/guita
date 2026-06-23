@@ -31,5 +31,9 @@
       </button>
       <text wx:else class="no-file">暂时没有可预览的食谱文件。</text>
     </view>
+
+    <view class="disclaimer">
+      <text class="disclaimer-text">本小程序提供的内容仅作参考，不构成医疗建议。</text>
+    </view>
   </block>
 </view>

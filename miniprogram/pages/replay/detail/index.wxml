@@ -22,6 +22,7 @@
         src="{{videoSrc}}"
         controls
         object-fit="contain"
+        enable-progress-gesture
       />
       <view wx:else class="video-placeholder">
         <text class="placeholder-text">暂时无法播放该回放，请稍后再试。</text>
@@ -41,6 +42,11 @@
       <view wx:if="{{detail.tags && detail.tags.length}}" class="tags">
         <text wx:for="{{detail.tags}}" wx:key="*this" wx:for-item="tag" class="tag">{{tag}}</text>
       </view>
+    </view>
+
+    <!-- 免责声明 -->
+    <view class="disclaimer">
+      <text class="disclaimer-text">本小程序提供的内容仅作参考，不构成医疗建议。</text>
     </view>
   </block>
 </view>

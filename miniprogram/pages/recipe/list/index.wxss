@@ -1,7 +1,7 @@
 .container {
   min-height: 100vh;
   background-color: #F8F6F3;
-  padding: 0 40rpx;
+  padding: 0 32rpx;
   box-sizing: border-box;
 }
 .center {
@@ -12,18 +12,18 @@
   height: 100vh;
 }
 .header {
-  padding: 40rpx 0 24rpx;
+  padding: 32rpx 0 20rpx;
 }
 .header-title {
   display: block;
-  font-size: 36rpx;
+  font-size: 34rpx;
   font-weight: 600;
-  color: #333333;
-  margin-bottom: 8rpx;
+  color: #2C2C2C;
+  margin-bottom: 6rpx;
 }
 .header-desc {
-  font-size: 26rpx;
-  color: #999999;
+  font-size: 24rpx;
+  color: #CCCCCC;
 }
 .empty-box {
   padding: 120rpx 0;
@@ -32,44 +32,55 @@
   justify-content: center;
 }
 .empty-text {
-  font-size: 28rpx;
+  font-size: 26rpx;
   color: #CCCCCC;
 }
 .card {
   display: flex;
   background-color: #FFFFFF;
   border-radius: 16rpx;
-  padding: 24rpx;
-  margin-bottom: 20rpx;
+  padding: 20rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
+}
+.card:active {
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
 }
 .card-cover {
-  width: 140rpx;
-  height: 140rpx;
+  width: 120rpx;
+  height: 120rpx;
   border-radius: 12rpx;
-  background-color: #FFF3E6;
+  background: linear-gradient(135deg, #FFF3E6, #FFF8F0);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  overflow: hidden;
+}
+.card-cover image {
+  width: 100%;
+  height: 100%;
 }
 .cover-text {
-  font-size: 26rpx;
+  font-size: 24rpx;
   color: #999999;
 }
 .card-body {
   flex: 1;
-  margin-left: 20rpx;
+  margin-left: 16rpx;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 .card-title {
-  font-size: 30rpx;
+  font-size: 28rpx;
   font-weight: 600;
-  color: #333333;
-  margin-bottom: 8rpx;
+  color: #2C2C2C;
+  margin-bottom: 4rpx;
+  line-height: 1.3;
 }
 .card-desc {
-  font-size: 24rpx;
+  font-size: 22rpx;
   color: #666666;
   line-height: 1.5;
   margin-bottom: 8rpx;
@@ -83,22 +94,22 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 10rpx;
-  margin-bottom: 6rpx;
+  gap: 8rpx;
+  margin-bottom: 4rpx;
 }
 .tag {
   font-size: 20rpx;
-  color: #F28C48;
+  color: #E98B4A;
   background-color: #FFF3E6;
-  padding: 4rpx 12rpx;
+  padding: 4rpx 10rpx;
   border-radius: 4rpx;
 }
 .card-date {
-  font-size: 22rpx;
+  font-size: 20rpx;
   color: #CCCCCC;
 }
 .load-more {
-  padding: 32rpx 0 48rpx;
+  padding: 24rpx 0 40rpx;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -121,5 +132,5 @@
   font-size: 28rpx;
   background-color: #FFFFFF;
   border: 1rpx solid #DDDDDD;
-  border-radius: 8rpx;
+  border-radius: 44rpx;
 }

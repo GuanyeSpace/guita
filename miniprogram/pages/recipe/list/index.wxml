@@ -27,7 +27,8 @@
         bindtap="onTapItem"
       >
         <view class="card-cover">
-          <text class="cover-text">食谱</text>
+          <image wx:if="{{item.cover_url}}" src="{{item.cover_url}}" mode="aspectFill" />
+          <text wx:else class="cover-text">食谱</text>
         </view>
         <view class="card-body">
           <text class="card-title">{{item.title}}</text>
@@ -41,7 +42,7 @@
 
       <view class="load-more">
         <text wx:if="{{loadingMore}}" class="status-text">正在加载更多...</text>
-        <text wx:elif="{{!hasMore}}" class="status-text">已经到底啦。</text>
+        <text wx:elif="{{!hasMore}}" class="status-text">已经到底了。</text>
       </view>
     </view>
   </block>

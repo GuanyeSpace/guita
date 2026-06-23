@@ -19,25 +19,33 @@
   },
   "tabBar": {
     "color": "#999999",
-    "selectedColor": "#333333",
+    "selectedColor": "#E98B4A",
     "backgroundColor": "#FFFFFF",
-    "borderStyle": "black",
+    "borderStyle": "white",
     "list": [
       {
         "pagePath": "pages/home/index",
-        "text": "首页"
+        "text": "首页",
+        "iconPath": "images/tab_home_normal.png",
+        "selectedIconPath": "images/tab_home_active.png"
       },
       {
         "pagePath": "pages/replay/list/index",
-        "text": "回放"
+        "text": "回放",
+        "iconPath": "images/tab_replay_normal.png",
+        "selectedIconPath": "images/tab_replay_active.png"
       },
       {
         "pagePath": "pages/recipe/list/index",
-        "text": "食谱"
+        "text": "食谱",
+        "iconPath": "images/tab_recipe_normal.png",
+        "selectedIconPath": "images/tab_recipe_active.png"
       },
       {
         "pagePath": "pages/profile/index",
-        "text": "我的"
+        "text": "我的",
+        "iconPath": "images/tab_profile_normal.png",
+        "selectedIconPath": "images/tab_profile_active.png"
       }
     ]
   },

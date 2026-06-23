@@ -28,21 +28,22 @@
   font-size: 28rpx;
   background-color: #FFFFFF;
   border: 1rpx solid #DDDDDD;
-  border-radius: 8rpx;
+  border-radius: 44rpx;
 }
 
 /* 视频区域 */
 .video-section {
   width: 100%;
   background-color: #000000;
+  position: relative;
 }
 .video {
   width: 100%;
-  height: 420rpx;
+  height: 440rpx;
 }
 .video-placeholder {
   width: 100%;
-  height: 420rpx;
+  height: 440rpx;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -55,27 +56,31 @@
 
 /* 内容信息 */
 .info-section {
-  padding: 32rpx 40rpx;
+  padding: 32rpx 32rpx 24rpx;
+  background-color: #FFFFFF;
+  border-radius: 20rpx 20rpx 0 0;
+  margin-top: -20rpx;
+  position: relative;
 }
 .title {
   display: block;
-  font-size: 34rpx;
+  font-size: 32rpx;
   font-weight: 600;
-  color: #333333;
-  margin-bottom: 16rpx;
+  color: #2C2C2C;
+  margin-bottom: 12rpx;
   line-height: 1.4;
 }
 .desc {
   display: block;
-  font-size: 28rpx;
+  font-size: 26rpx;
   color: #666666;
   line-height: 1.6;
-  margin-bottom: 24rpx;
+  margin-bottom: 20rpx;
 }
 .meta {
   display: flex;
   flex-direction: row;
-  gap: 32rpx;
+  gap: 24rpx;
   margin-bottom: 16rpx;
 }
 .meta-text {
@@ -90,8 +95,19 @@
 }
 .tag {
   font-size: 22rpx;
-  color: #F28C48;
+  color: #E98B4A;
   background-color: #FFF3E6;
-  padding: 6rpx 16rpx;
-  border-radius: 4rpx;
+  padding: 6rpx 14rpx;
+  border-radius: 6rpx;
+}
+
+/* 免责声明 */
+.disclaimer {
+  padding: 16rpx 40rpx 48rpx;
+  text-align: center;
+}
+.disclaimer-text {
+  font-size: 20rpx;
+  color: #CCCCCC;
+  line-height: 1.5;
 }

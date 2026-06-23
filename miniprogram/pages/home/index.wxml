@@ -9,19 +9,22 @@
   </view>
 
   <view wx:else class="content">
-    <!-- 主播信息 -->
-    <view class="host-section">
-      <view class="host-avatar" style="background-color: {{host.brand_color_accent || '#F0F0F0'}}">
-        <text class="host-avatar-text">{{host.display_name[0] || '?'}}</text>
+    <!-- Hero 区域 -->
+    <view class="hero-section">
+      <view class="hero-avatar" style="background-color: {{host.brand_color_accent || '#FFF3E6'}}">
+        <text class="hero-avatar-text">{{host.display_name[0] || '?'}}</text>
       </view>
-      <text class="host-name">{{host.display_name}}</text>
-      <text class="host-desc">{{host.description}}</text>
-      <text class="host-target">适合：{{host.target_user}}</text>
+      <text class="hero-name">{{host.display_name}}</text>
+      <text class="hero-desc">{{host.description}}</text>
+      <text class="hero-target">适合：{{host.target_user}}</text>
     </view>
 
     <!-- 最新直播回放 -->
     <view class="section">
-      <text class="section-title">最新直播回放</text>
+      <view class="section-header">
+        <text class="section-title">最新直播回放</text>
+        <text class="section-more">查看全部 ›</text>
+      </view>
       <view wx:if="{{replaysEmpty}}" class="empty-box">
         <text class="empty-text">暂时还没有直播回放。</text>
       </view>
@@ -34,7 +37,8 @@
           bindtap="onTapReplay"
         >
           <view class="card-cover replay-cover">
-            <text class="cover-placeholder">回放</text>
+            <image wx:if="{{item.cover_url}}" src="{{item.cover_url}}" mode="aspectFill" />
+            <text wx:else class="cover-placeholder">回放</text>
           </view>
           <view class="card-body">
             <text class="card-title">{{item.title}}</text>
@@ -50,7 +54,10 @@
 
     <!-- 精选食谱 -->
     <view class="section">
-      <text class="section-title">精选食谱</text>
+      <view class="section-header">
+        <text class="section-title">精选食谱</text>
+        <text class="section-more">查看全部 ›</text>
+      </view>
       <view wx:if="{{recipesEmpty}}" class="empty-box">
         <text class="empty-text">暂时还没有食谱。</text>
       </view>
@@ -63,7 +70,8 @@
           bindtap="onTapRecipe"
         >
           <view class="card-cover recipe-cover">
-            <text class="cover-placeholder">食谱</text>
+            <image wx:if="{{item.cover_url}}" src="{{item.cover_url}}" mode="aspectFill" />
+            <text wx:else class="cover-placeholder">食谱</text>
           </view>
           <view class="card-body">
             <text class="card-title">{{item.title}}</text>
@@ -77,5 +85,12 @@
     </view>
 
     <view class="bottom-safe"></view>
+
+    <!-- 免责声明 -->
+    <view style="padding: 16rpx 0 48rpx; text-align: center;">
+      <text style="font-size: 20rpx; color: #CCCCCC; line-height: 1.5;">
+        本小程序提供的内容仅作参考，不构成医疗建议。
+      </text>
+    </view>
   </view>
 </scroll-view>

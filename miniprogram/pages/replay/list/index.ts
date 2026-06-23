@@ -4,6 +4,15 @@ import type { ContentListData } from '../../../types/cloud'
 import { formatDate, formatDuration } from '../../../utils/format'
 import { track } from '../../../utils/track'
 
+async function resolveCover(item: Record<string, unknown>): Promise<void> {
+  if (item.cover_file_id) {
+    try {
+      const r = await wx.cloud.getTempFileURL({ fileList: [item.cover_file_id as string] })
+      if (r.fileList[0].tempFileURL) item.cover_url = r.fileList[0].tempFileURL
+    } catch (_) { /* ignore */ }
+  }
+}
+
 Page({
   data: {
     loading: true,
@@ -46,10 +55,13 @@ Page({
       })
 
       const newList = res.data.list as Record<string, unknown>[]
+      await Promise.all(newList.map(resolveCover))
+
       const list = page === 1 ? newList : [...this.data.list, ...newList]
 
       this.setData({
         loading: false,
+        loadingMore: false,
         refreshing: false,
         list,
         page,
@@ -78,21 +90,15 @@ Page({
         loading: false,
         refreshing: false,
         loadingMore: false,
-        error: page === 1 ? '刚刚网络有点慢，再试一次好么？' : '',
+        error: '刚刚网络有点慢，再试一次好么？',
       })
-      if (page > 1) {
-        wx.showToast({ title: '刚刚网络有点慢，再试一次好么？', icon: 'none' })
-      }
-    } finally {
-      if (isRefresh) wx.stopPullDownRefresh()
     }
   },
 
-  async loadMore() {
+  loadMore() {
     if (this.data.loadingMore || !this.data.hasMore) return
     this.setData({ loadingMore: true })
-    await this.doLoad(this.data.page + 1, false)
-    this.setData({ loadingMore: false })
+    this.doLoad(this.data.page + 1, false)
   },
 
   onRetry() {

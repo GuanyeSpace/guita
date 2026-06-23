@@ -28,66 +28,85 @@
   font-size: 28rpx;
   background-color: #FFFFFF;
   border: 1rpx solid #DDDDDD;
-  border-radius: 8rpx;
+  border-radius: 44rpx;
 }
 
 /* 内容信息 */
 .info-section {
-  padding: 40rpx 40rpx 32rpx;
+  padding: 40rpx 32rpx 24rpx;
+  background-color: #FFFFFF;
+  border-radius: 0 0 20rpx 20rpx;
+  margin: 0 0 24rpx;
 }
 .title {
   display: block;
-  font-size: 36rpx;
+  font-size: 32rpx;
   font-weight: 600;
-  color: #333333;
-  margin-bottom: 20rpx;
+  color: #2C2C2C;
+  margin-bottom: 12rpx;
   line-height: 1.4;
 }
 .desc {
   display: block;
-  font-size: 28rpx;
+  font-size: 26rpx;
   color: #666666;
   line-height: 1.6;
-  margin-bottom: 20rpx;
+  margin-bottom: 16rpx;
 }
 .tags {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   gap: 12rpx;
-  margin-bottom: 16rpx;
+  margin-bottom: 12rpx;
 }
 .tag {
   font-size: 22rpx;
-  color: #F28C48;
+  color: #E98B4A;
   background-color: #FFF3E6;
-  padding: 6rpx 16rpx;
-  border-radius: 4rpx;
+  padding: 6rpx 14rpx;
+  border-radius: 6rpx;
 }
 .date {
   font-size: 24rpx;
-  color: #999999;
+  color: #CCCCCC;
 }
 
 /* 文件区域 */
 .file-section {
-  padding: 32rpx 40rpx;
+  padding: 0 32rpx;
 }
 .file-btn {
   width: 100%;
-  height: 88rpx;
-  line-height: 88rpx;
+  height: 96rpx;
+  line-height: 96rpx;
   font-size: 30rpx;
+  font-weight: 500;
   color: #FFFFFF;
-  background-color: #F28C48;
-  border-radius: 8rpx;
+  background: linear-gradient(135deg, #E98B4A, #F28C48);
+  border-radius: 48rpx;
   border: none;
   text-align: center;
+  box-shadow: 0 4rpx 12rpx rgba(233, 139, 74, 0.3);
 }
 .file-btn::after {
   border: none;
 }
 .no-file {
-  font-size: 26rpx;
+  display: block;
+  font-size: 24rpx;
   color: #CCCCCC;
+  text-align: center;
+  padding: 40rpx 0;
+}
+
+/* 免责声明 */
+.disclaimer {
+  padding: 32rpx 40rpx 48rpx;
+  text-align: center;
+}
+.disclaimer-text {
+  font-size: 20rpx;
+  color: #CCCCCC;
+  line-height: 1.5;
 }

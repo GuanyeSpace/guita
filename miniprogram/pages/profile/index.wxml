@@ -13,7 +13,7 @@
   </view>
 
   <block wx:else>
-    <view class="header-title">我的</view>
+    <view class="page-title">我的</view>
 
     <!-- 用户卡片 -->
     <view class="card user-card">
@@ -40,7 +40,7 @@
     <!-- 老师信息 -->
     <view class="section-title">我的老师</view>
     <view wx:if="{{host}}" class="card host-card">
-      <view class="host-avatar" style="background-color: {{host.brand_color_accent || '#F0F0F0'}}">
+      <view class="host-avatar" style="background-color: {{host.brand_color_accent || '#FFF3E6'}}">
         <text class="host-avatar-text">{{host.display_name[0] || '?'}}</text>
       </view>
       <view class="host-info">

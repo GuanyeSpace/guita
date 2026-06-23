@@ -4,6 +4,15 @@ import type { GetMyHostData, ContentListData } from '../../types/cloud'
 import { formatDate, formatDuration } from '../../utils/format'
 import { track } from '../../utils/track'
 
+async function resolveCover(item: Record<string, unknown>): Promise<void> {
+  if (item.cover_file_id) {
+    try {
+      const r = await wx.cloud.getTempFileURL({ fileList: [item.cover_file_id as string] })
+      if (r.fileList[0].tempFileURL) item.cover_url = r.fileList[0].tempFileURL
+    } catch (_) { /* ignore */ }
+  }
+}
+
 Page({
   data: {
     loading: true,
@@ -47,6 +56,12 @@ Page({
 
       const replays = replayRes.data.list as Record<string, unknown>[]
       const recipes = recipeRes.data.list as Record<string, unknown>[]
+
+      // 并行加载封面图
+      await Promise.all([
+        ...replays.map(resolveCover),
+        ...recipes.map(resolveCover),
+      ])
 
       this.setData({
         loading: false,
