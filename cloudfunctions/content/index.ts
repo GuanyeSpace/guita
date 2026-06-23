@@ -6,6 +6,27 @@ cloud.init({
 
 const db = cloud.database()
 
+function normalizeFileId(value: unknown): string {
+  if (!value) return ''
+  if (typeof value === 'string') return value
+  if (Array.isArray(value)) {
+    const first = value[0]
+    if (typeof first === 'string') return first
+    if (typeof first === 'object' && first !== null) {
+      return (first as Record<string, unknown>).fileID as string
+        || (first as Record<string, unknown>).fileId as string
+        || (first as Record<string, unknown>).url as string
+        || ''
+    }
+    return ''
+  }
+  if (typeof value === 'object') {
+    const obj = value as Record<string, unknown>
+    return obj.fileID as string || obj.fileId as string || obj.url as string || ''
+  }
+  return ''
+}
+
 interface CloudFunctionEvent {
   action: string
   payload?: Record<string, unknown>
@@ -73,11 +94,17 @@ async function handleList(payload?: Record<string, unknown>) {
 
   const listRes = await query.skip(skip).limit(pageSize).get()
 
+  const list = listRes.data.map((item: Record<string, unknown>) => ({
+    ...item,
+    cover_file_id: normalizeFileId(item.cover_file_id),
+    asset_file_id: normalizeFileId(item.asset_file_id),
+  }))
+
   return {
     code: 0,
     message: 'ok',
     data: {
-      list: listRes.data,
+      list,
       page,
       page_size: pageSize,
       total,
@@ -145,6 +172,9 @@ async function handleDetail(payload?: Record<string, unknown>) {
   ) {
     return { code: 40032, message: '内容暂不可访问', data: null }
   }
+
+  detail.cover_file_id = normalizeFileId(detail.cover_file_id)
+  detail.asset_file_id = normalizeFileId(detail.asset_file_id)
 
   return {
     code: 0,

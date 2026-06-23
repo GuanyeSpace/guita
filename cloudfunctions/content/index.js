@@ -8,6 +8,22 @@ wx_server_sdk_1.default.init({
     env: wx_server_sdk_1.default.DYNAMIC_CURRENT_ENV,
 });
 const db = wx_server_sdk_1.default.database();
+function normalizeFileId(value) {
+    if (!value) return '';
+    if (typeof value === 'string') return value;
+    if (Array.isArray(value)) {
+        const first = value[0];
+        if (typeof first === 'string') return first;
+        if (typeof first === 'object' && first !== null) {
+            return first.fileID || first.fileId || first.url || '';
+        }
+        return '';
+    }
+    if (typeof value === 'object') {
+        return value.fileID || value.fileId || value.url || '';
+    }
+    return '';
+}
 async function handleList(payload) {
     const wxContext = wx_server_sdk_1.default.getWXContext();
     const openid = wxContext.OPENID;
@@ -55,11 +71,12 @@ async function handleList(payload) {
         query = query.orderBy('sort_order', 'asc').orderBy('published_at', 'desc');
     }
     const listRes = await query.skip(skip).limit(pageSize).get();
+    const list = listRes.data.map((item) => (Object.assign(Object.assign({}, item), { cover_file_id: normalizeFileId(item.cover_file_id), asset_file_id: normalizeFileId(item.asset_file_id) })));
     return {
         code: 0,
         message: 'ok',
         data: {
-            list: listRes.data,
+            list,
             page,
             page_size: pageSize,
             total,
@@ -113,6 +130,8 @@ async function handleDetail(payload) {
         detail.status !== 'published') {
         return { code: 40032, message: '内容暂不可访问', data: null };
     }
+    detail.cover_file_id = normalizeFileId(detail.cover_file_id);
+    detail.asset_file_id = normalizeFileId(detail.asset_file_id);
     return {
         code: 0,
         message: 'ok',
