@@ -57,6 +57,14 @@ Page({
       const replays = replayRes.data.list as Record<string, unknown>[]
       const recipes = recipeRes.data.list as Record<string, unknown>[]
 
+      // 计算回放时长显示字段
+      // 数据库可能返回 $numberInt 对象而非纯数字，故做防御性转换
+      replays.forEach((item) => {
+        const raw = item.duration_sec
+        const sec = typeof raw === 'number' ? raw : Number(raw)
+        item.displayDuration = (sec > 0) ? formatDuration(sec) : ''
+      })
+
       // 并行加载封面图
       await Promise.all([
         ...replays.map(resolveCover),
@@ -93,12 +101,10 @@ Page({
     this.loadHome()
   },
 
-  // 查看全部回放
   onViewAllReplays() {
     switchToReplayList()
   },
 
-  // 查看全部食谱
   onViewAllRecipes() {
     switchToRecipeList()
   },

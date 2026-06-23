@@ -54,7 +54,7 @@
             <text class="card-title">{{item.title}}</text>
             <text class="card-desc">{{item.description}}</text>
             <view class="card-meta">
-              <text wx:if="{{item.duration_sec > 0}}" class="meta-text">时长：{{formatDuration(item.duration_sec)}}</text>
+              <text wx:if="{{item.displayDuration}}" class="meta-text">时长：{{item.displayDuration}}</text>
               <text class="meta-text">{{formatDate(item.published_at)}}</text>
             </view>
           </view>
