@@ -9,21 +9,31 @@
   </view>
 
   <view wx:else class="content">
-    <!-- Hero 区域 -->
-    <view class="hero-section">
-      <view class="hero-avatar" style="background-color: {{host.brand_color_accent || '#FFF3E6'}}">
-        <text class="hero-avatar-text">{{host.display_name[0] || '?'}}</text>
-      </view>
-      <text class="hero-name">{{host.display_name}}</text>
-      <text class="hero-desc">{{host.description}}</text>
-      <text class="hero-target">适合：{{host.target_user}}</text>
+    <!-- ===== 顶部欢迎区 ===== -->
+    <view class="welcome-area">
+      <text class="welcome-greeting">欢迎回来</text>
+      <text class="welcome-title">你的专属内容已准备好</text>
+      <text class="welcome-sub">跟着 {{host.display_name}}，轻松查看回放与食谱</text>
     </view>
 
-    <!-- 最新直播回放 -->
+    <!-- ===== 老师信息卡片 ===== -->
+    <view class="teacher-card">
+      <view class="teacher-avatar" style="background-color: {{host.brand_color_accent || '#FFF3E6'}}">
+        <text class="teacher-avatar-text">{{host.display_name[0] || '?'}}</text>
+      </view>
+      <view class="teacher-info">
+        <text class="teacher-name">{{host.display_name}}</text>
+        <text class="teacher-desc">{{host.description}}</text>
+        <text class="teacher-target">适合：{{host.target_user}}</text>
+        <view class="teacher-badge">已绑定老师</view>
+      </view>
+    </view>
+
+    <!-- ===== 最新直播回放 ===== -->
     <view class="section">
       <view class="section-header">
         <text class="section-title">最新直播回放</text>
-        <text class="section-more">查看全部 ›</text>
+        <text class="section-more" bindtap="onViewAllReplays">查看全部 ›</text>
       </view>
       <view wx:if="{{replaysEmpty}}" class="empty-box">
         <text class="empty-text">暂时还没有直播回放。</text>
@@ -44,7 +54,7 @@
             <text class="card-title">{{item.title}}</text>
             <text class="card-desc">{{item.description}}</text>
             <view class="card-meta">
-              <text class="meta-text">时长：{{formatDuration(item.duration_sec)}}</text>
+              <text wx:if="{{item.duration_sec > 0}}" class="meta-text">时长：{{formatDuration(item.duration_sec)}}</text>
               <text class="meta-text">{{formatDate(item.published_at)}}</text>
             </view>
           </view>
@@ -52,11 +62,11 @@
       </view>
     </view>
 
-    <!-- 精选食谱 -->
+    <!-- ===== 精选食谱 ===== -->
     <view class="section">
       <view class="section-header">
         <text class="section-title">精选食谱</text>
-        <text class="section-more">查看全部 ›</text>
+        <text class="section-more" bindtap="onViewAllRecipes">查看全部 ›</text>
       </view>
       <view wx:if="{{recipesEmpty}}" class="empty-box">
         <text class="empty-text">暂时还没有食谱。</text>
@@ -84,13 +94,10 @@
       </view>
     </view>
 
+    <!-- ===== 底部 ===== -->
     <view class="bottom-safe"></view>
-
-    <!-- 免责声明 -->
-    <view style="padding: 16rpx 0 48rpx; text-align: center;">
-      <text style="font-size: 20rpx; color: #CCCCCC; line-height: 1.5;">
-        本小程序提供的内容仅作参考，不构成医疗建议。
-      </text>
+    <view class="disclaimer">
+      <text class="disclaimer-text">本小程序提供的内容仅作参考，不构成医疗建议。</text>
     </view>
   </view>
 </scroll-view>

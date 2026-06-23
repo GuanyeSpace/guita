@@ -1,5 +1,5 @@
 import { callFunction } from '../../utils/request'
-import { redirectToHostSelect, redirectToBindPhone } from '../../utils/route'
+import { redirectToHostSelect, redirectToBindPhone, switchToReplayList, switchToRecipeList } from '../../utils/route'
 import type { GetMyHostData, ContentListData } from '../../types/cloud'
 import { formatDate, formatDuration } from '../../utils/format'
 import { track } from '../../utils/track'
@@ -91,6 +91,16 @@ Page({
 
   onRetry() {
     this.loadHome()
+  },
+
+  // 查看全部回放
+  onViewAllReplays() {
+    switchToReplayList()
+  },
+
+  // 查看全部食谱
+  onViewAllRecipes() {
+    switchToRecipeList()
   },
 
   onTapReplay(e: WechatMiniprogram.BaseEvent) {
