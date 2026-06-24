@@ -63,6 +63,10 @@ Page({
         const raw = item.duration_sec
         const sec = typeof raw === 'number' ? raw : Number(raw)
         item.displayDuration = (sec > 0) ? formatDuration(sec) : ''
+        item._coverError = false
+      })
+      recipes.forEach((item) => {
+        item._coverError = false
       })
 
       // 并行加载封面图
@@ -94,6 +98,17 @@ Page({
       }
 
       this.setData({ loading: false, error: '刚刚网络有点慢，再试一次好么？' })
+    }
+  },
+
+  onCoverError(e: WechatMiniprogram.TouchEvent) {
+    const id = e.currentTarget.dataset.id as string
+    const type = e.currentTarget.dataset.type as string
+    const listKey = type === 'replay' ? 'replays' : 'recipes'
+    const list = this.data[listKey] as Record<string, unknown>[]
+    const idx = list.findIndex((item: any) => item._id === id)
+    if (idx >= 0) {
+      this.setData({ [`${listKey}[${idx}]._coverError`]: true })
     }
   },
 

@@ -1,35 +1,42 @@
-/* 归她 - Design Tokens */
-/* 主色：温暖橙色 #E98B4A */
-/* 辅助色：浅橙 #FFF3E6 / 浅蓝 #E8F0FE / 浅灰 #F5F5F5 */
-/* 背景色：暖白浅米 #F8F6F3 */
+/* 归她 - Design Tokens (全站统一规范) */
+/*
+  主色 #F28C48（小面积点缀）/ 深 #D9722E / 浅 #FFF3E6
+  页面背景 #FCFBF9（近白暖灰，弱化渐变，大留白）
+  卡片白底 #FFFFFF，圆角 20rpx，1rpx 细线描边 #ECE8E2，阴影 0 2rpx 12rpx rgba(31,27,24,0.04)
+  文本 #1F1B18 / #6E665E / #A8A099
+  标签为 1rpx 细线胶囊，标签字 #C0712E，细线/分隔 #ECE8E2
+  间距刻度 8/16/24/32/40/56 rpx
+*/
 
 page {
-  background-color: #F8F6F3;
+  background-color: #FCFBF9;
   font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', sans-serif;
-  color: #2C2C2C;
+  color: #1F1B18;
   font-size: 28rpx;
-  --color-primary: #E98B4A;
+  --color-primary: #F28C48;
+  --color-primary-dark: #D9722E;
   --color-primary-bg: #FFF3E6;
-  --color-primary-light: #FDF6EE;
-  --color-text: #2C2C2C;
-  --color-text-secondary: #666666;
-  --color-text-tertiary: #999999;
-  --color-text-placeholder: #CCCCCC;
-  --color-border: #EEEEEE;
+  --color-primary-light: #FEF9F4;
+  --color-text: #1F1B18;
+  --color-text-secondary: #6E665E;
+  --color-text-tertiary: #A8A099;
+  --color-text-placeholder: #C5BFB8;
+  --color-border: #ECE8E2;
+  --color-divider: #ECE8E2;
   --color-bg-card: #FFFFFF;
-  --color-bg-page: #F8F6F3;
+  --color-bg-page: #FCFBF9;
   --color-error: #D94F4F;
   --color-error-bg: #FFF5F5;
   --color-success: #52C41A;
-  --radius-sm: 6rpx;
+  --radius-sm: 8rpx;
   --radius-md: 12rpx;
   --radius-lg: 16rpx;
   --radius-xl: 20rpx;
-  --shadow-card: 0 2rpx 8rpx rgba(0, 0, 0, 0.04);
+  --shadow-card: 0 2rpx 12rpx rgba(31, 27, 24, 0.04);
   --spacing-xs: 8rpx;
-  --spacing-sm: 12rpx;
-  --spacing-md: 16rpx;
-  --spacing-lg: 24rpx;
-  --spacing-xl: 32rpx;
-  --spacing-xxl: 40rpx;
+  --spacing-sm: 16rpx;
+  --spacing-md: 24rpx;
+  --spacing-lg: 32rpx;
+  --spacing-xl: 40rpx;
+  --spacing-xxl: 56rpx;
 }

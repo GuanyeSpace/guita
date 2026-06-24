@@ -1,22 +1,70 @@
 <scroll-view scroll-y class="container">
-  <view wx:if="{{loading}}" class="center">
-    <text class="status-text">正在加载首页...</text>
+  <!-- ===== 骨架屏 ===== -->
+  <view wx:if="{{loading}}" class="skeleton">
+    <!-- 问候骨架 -->
+    <view class="sk-greeting">
+      <view class="sk-line sk-line-short"></view>
+      <view class="sk-line sk-line-long"></view>
+      <view class="sk-line sk-line-mid"></view>
+    </view>
+    <!-- 主播卡片骨架 -->
+    <view class="sk-teacher">
+      <view class="sk-avatar"></view>
+      <view class="sk-teacher-info">
+        <view class="sk-line sk-line-mid"></view>
+        <view class="sk-line sk-line-long"></view>
+      </view>
+    </view>
+    <!-- 回放区块骨架 -->
+    <view class="sk-section">
+      <view class="sk-section-header">
+        <view class="sk-line sk-line-mid"></view>
+      </view>
+      <block wx:for="{{[1,2,3]}}" wx:key="*this">
+        <view class="sk-card">
+          <view class="sk-cover"></view>
+          <view class="sk-card-body">
+            <view class="sk-line sk-line-long"></view>
+            <view class="sk-line sk-line-mid"></view>
+            <view class="sk-line sk-line-short"></view>
+          </view>
+        </view>
+      </block>
+    </view>
+    <!-- 食谱区块骨架 -->
+    <view class="sk-section">
+      <view class="sk-section-header">
+        <view class="sk-line sk-line-mid"></view>
+      </view>
+      <block wx:for="{{[1,2,3]}}" wx:key="*this">
+        <view class="sk-card">
+          <view class="sk-cover"></view>
+          <view class="sk-card-body">
+            <view class="sk-line sk-line-long"></view>
+            <view class="sk-line sk-line-mid"></view>
+            <view class="sk-line sk-line-short"></view>
+          </view>
+        </view>
+      </block>
+    </view>
   </view>
 
+  <!-- ===== 错误 ===== -->
   <view wx:elif="{{error}}" class="center">
     <text class="error-text">{{error}}</text>
     <button class="retry-btn" bindtap="onRetry">重试</button>
   </view>
 
+  <!-- ===== 正常内容 ===== -->
   <view wx:else class="content">
-    <!-- ===== 顶部欢迎区 ===== -->
-    <view class="welcome-area">
-      <text class="welcome-greeting">欢迎回来</text>
-      <text class="welcome-title">你的专属内容已准备好</text>
-      <text class="welcome-sub">跟着 {{host.display_name}}，轻松查看回放与食谱</text>
+    <!-- 顶部问候区 -->
+    <view class="greeting">
+      <text class="greeting-eyebrow">欢迎回来</text>
+      <text class="greeting-title">你的专属内容已准备好</text>
+      <text class="greeting-sub">跟随 <text class="greeting-host">{{host.display_name}}</text>，轻松查看回放与食谱</text>
     </view>
 
-    <!-- ===== 老师信息卡片 ===== -->
+    <!-- 主播信息卡片 -->
     <view class="teacher-card">
       <view class="teacher-avatar" style="background-color: {{host.brand_color_accent || '#FFF3E6'}}">
         <text class="teacher-avatar-text">{{host.display_name[0] || '?'}}</text>
@@ -24,39 +72,61 @@
       <view class="teacher-info">
         <text class="teacher-name">{{host.display_name}}</text>
         <text class="teacher-desc">{{host.description}}</text>
-        <text class="teacher-target">适合：{{host.target_user}}</text>
-        <view class="teacher-badge">已绑定老师</view>
+        <view class="teacher-tags">
+          <text class="teacher-tag">{{host.target_user}}</text>
+          <text class="teacher-tag teacher-tag-checked">✓ 已绑定</text>
+        </view>
       </view>
     </view>
 
     <!-- ===== 最新直播回放 ===== -->
     <view class="section">
-      <view class="section-header">
-        <text class="section-title">最新直播回放</text>
-        <text class="section-more" bindtap="onViewAllReplays">查看全部 ›</text>
+      <view class="section-header" bindtap="onViewAllReplays">
+        <view class="section-title-bar">
+          <view class="section-accent"></view>
+          <text class="section-title">最新直播回放</text>
+        </view>
+        <text class="section-more">查看全部 ›</text>
       </view>
-      <view wx:if="{{replaysEmpty}}" class="empty-box">
-        <text class="empty-text">暂时还没有直播回放。</text>
+
+      <!-- 空态 -->
+      <view wx:if="{{replaysEmpty}}" class="empty-state">
+        <view class="empty-cover replay-ph-bg">
+          <text class="empty-cover-icon">▶</text>
+        </view>
+        <text class="empty-title">老师还在准备内容</text>
+        <text class="empty-desc">敬请期待</text>
       </view>
+
+      <!-- 卡片列表 -->
       <view wx:else>
         <view
           wx:for="{{replays}}"
           wx:key="_id"
-          class="card"
+          class="content-card"
+          hover-class="card-hover"
           data-id="{{item._id}}"
           bindtap="onTapReplay"
         >
-          <view class="card-cover replay-cover">
-            <image wx:if="{{item.cover_url}}" src="{{item.cover_url}}" mode="aspectFill" />
-            <text wx:else class="cover-placeholder">回放</text>
+          <view class="card-cover replay-cover-bg">
+            <image
+              wx:if="{{item.cover_url && !item._coverError}}"
+              src="{{item.cover_url}}"
+              mode="aspectFill"
+              class="cover-image"
+              binderror="onCoverError"
+              data-id="{{item._id}}"
+              data-type="replay"
+            />
+            <view wx:else class="cover-placeholder replay-ph">
+              <text class="cover-ph-icon">▶</text>
+            </view>
+            <view wx:if="{{item.displayDuration}}" class="cover-badge">{{item.displayDuration}}</view>
           </view>
           <view class="card-body">
             <text class="card-title">{{item.title}}</text>
             <text class="card-desc">{{item.description}}</text>
-            <view class="card-meta">
-              <text wx:if="{{item.displayDuration}}" class="meta-text">时长：{{item.displayDuration}}</text>
-              <text class="meta-text">{{formatDate(item.published_at)}}</text>
-            </view>
+            <text class="card-meta-text">{{formatDate(item.published_at)}}</text>
           </view>
         </view>
       </view>
@@ -64,30 +134,52 @@
 
     <!-- ===== 精选食谱 ===== -->
     <view class="section">
-      <view class="section-header">
-        <text class="section-title">精选食谱</text>
-        <text class="section-more" bindtap="onViewAllRecipes">查看全部 ›</text>
+      <view class="section-header" bindtap="onViewAllRecipes">
+        <view class="section-title-bar">
+          <view class="section-accent"></view>
+          <text class="section-title">精选食谱</text>
+        </view>
+        <text class="section-more">查看全部 ›</text>
       </view>
-      <view wx:if="{{recipesEmpty}}" class="empty-box">
-        <text class="empty-text">暂时还没有食谱。</text>
+
+      <!-- 空态 -->
+      <view wx:if="{{recipesEmpty}}" class="empty-state">
+        <view class="empty-cover recipe-ph-bg">
+          <text class="empty-cover-icon">🍽</text>
+        </view>
+        <text class="empty-title">老师还在准备内容</text>
+        <text class="empty-desc">敬请期待</text>
       </view>
+
+      <!-- 卡片列表 -->
       <view wx:else>
         <view
           wx:for="{{recipes}}"
           wx:key="_id"
-          class="card"
+          class="content-card"
+          hover-class="card-hover"
           data-id="{{item._id}}"
           bindtap="onTapRecipe"
         >
-          <view class="card-cover recipe-cover">
-            <image wx:if="{{item.cover_url}}" src="{{item.cover_url}}" mode="aspectFill" />
-            <text wx:else class="cover-placeholder">食谱</text>
+          <view class="card-cover recipe-cover-bg">
+            <image
+              wx:if="{{item.cover_url && !item._coverError}}"
+              src="{{item.cover_url}}"
+              mode="aspectFill"
+              class="cover-image"
+              binderror="onCoverError"
+              data-id="{{item._id}}"
+              data-type="recipe"
+            />
+            <view wx:else class="cover-placeholder recipe-ph">
+              <text class="cover-ph-icon">🍽</text>
+            </view>
           </view>
           <view class="card-body">
             <text class="card-title">{{item.title}}</text>
             <text class="card-desc">{{item.description}}</text>
-            <view wx:if="{{item.tags && item.tags.length}}" class="tags">
-              <text wx:for="{{item.tags}}" wx:key="*this" wx:for-item="tag" class="tag">{{tag}}</text>
+            <view wx:if="{{item.tags && item.tags.length}}" class="card-tags">
+              <text wx:for="{{item.tags}}" wx:key="*this" wx:for-item="tag" class="card-tag">{{tag}}</text>
             </view>
           </view>
         </view>
@@ -95,9 +187,10 @@
     </view>
 
     <!-- ===== 底部 ===== -->
-    <view class="bottom-safe"></view>
+    <view class="disclaimer-divider"></view>
     <view class="disclaimer">
       <text class="disclaimer-text">本小程序提供的内容仅作参考，不构成医疗建议。</text>
     </view>
+    <view class="bottom-safe"></view>
   </view>
 </scroll-view>
