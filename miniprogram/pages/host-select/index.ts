@@ -60,6 +60,9 @@ Page({
         action: 'bind',
         payload: { host_id: host._id },
       })
+
+      const app = getApp<{ globalData: { homeNeedsRefresh: boolean } }>()
+      app.globalData.homeNeedsRefresh = true
       switchToHome()
     } catch (e) {
       const msg = (e as Error).message || '刚刚网络有点慢，再试一次好么？'

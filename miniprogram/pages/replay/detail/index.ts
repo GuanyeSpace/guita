@@ -3,6 +3,7 @@ import { redirectToHostSelect, redirectToBindPhone } from '../../../utils/route'
 import type { ContentDetailData } from '../../../types/cloud'
 import { formatDate, formatDuration } from '../../../utils/format'
 import { track } from '../../../utils/track'
+import { recordContent } from '../../../utils/record'
 
 Page({
   data: {
@@ -61,6 +62,11 @@ Page({
         host_id: detail.host_id as string,
         content_id: id,
       })
+
+      recordContent(id, 'view', { progressSec: 0 })
+
+      const app = getApp<{ globalData: { homeNeedsRefresh: boolean } }>()
+      app.globalData.homeNeedsRefresh = true
     } catch (e) {
       const msg = (e as Error).message || '刚刚网络有点慢，再试一次好么？'
 

@@ -1,4 +1,9 @@
 App({
+  globalData: {
+    /** 首页是否需要刷新：切换主播/记录观看等操作后置 true，首页 onShow 消费后置 false */
+    homeNeedsRefresh: false,
+  },
+
   onLaunch() {
     if (!wx.cloud) {
       console.error('请使用 2.2.3 或以上的基础库以使用云能力');
