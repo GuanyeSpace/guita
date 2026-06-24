@@ -13,6 +13,16 @@ async function resolveCover(item: Record<string, unknown>): Promise<void> {
   }
 }
 
+/** 给列表项预处理 model 字段 */
+function prepareItems(items: Record<string, unknown>[]) {
+  items.forEach((item) => {
+    const raw = item.duration_sec
+    const sec = typeof raw === 'number' ? raw : Number(raw)
+    item.displayDuration = (sec > 0) ? formatDuration(sec) : ''
+    item._coverError = false
+  })
+}
+
 Page({
   data: {
     loading: true,
@@ -55,6 +65,7 @@ Page({
       })
 
       const newList = res.data.list as Record<string, unknown>[]
+      prepareItems(newList)
       await Promise.all(newList.map(resolveCover))
 
       const list = page === 1 ? newList : [...this.data.list, ...newList]
@@ -68,6 +79,8 @@ Page({
         total: res.data.total,
         hasMore: list.length < res.data.total,
       })
+
+      wx.stopPullDownRefresh()
 
       if (page === 1) {
         track('guita.content.replay_list_view', {
@@ -92,6 +105,16 @@ Page({
         loadingMore: false,
         error: '刚刚网络有点慢，再试一次好么？',
       })
+
+      wx.stopPullDownRefresh()
+    }
+  },
+
+  onCoverError(e: WechatMiniprogram.TouchEvent) {
+    const id = e.currentTarget.dataset.id as string
+    const idx = this.data.list.findIndex((item: any) => item._id === id)
+    if (idx >= 0) {
+      this.setData({ [`list[${idx}]._coverError`]: true })
     }
   },
 

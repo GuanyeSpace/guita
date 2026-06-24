@@ -1,0 +1,352 @@
+/* ========================================
+   归她 · 全站公共样式（统一视觉规范）
+   主色 #F28C48 / 深 #D9722E / 浅 #FFF3E6
+   页面背景 #FCFBF9  卡片白 #FFFFFF
+   描边 #ECE8E2  阴影 0 2rpx 12rpx rgba(31,27,24,0.04)
+   文本 #1F1B18 / #6E665E / #A8A099
+   间距刻度 8/16/24/32/40/56 rpx
+   ======================================== */
+
+/* ========================================
+   容器 & 布局
+   ======================================== */
+.g-container {
+  min-height: 100vh;
+  background-color: #FCFBF9;
+}
+.g-content-padded {
+  padding: 0 40rpx;
+  box-sizing: border-box;
+}
+.g-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 40rpx;
+  box-sizing: border-box;
+}
+
+/* ========================================
+   基础卡片（白底 + 20rpx 圆角 + 1rpx 细线 + 克制阴影）
+   ======================================== */
+.g-card {
+  background-color: #FFFFFF;
+  border-radius: 20rpx;
+  border: 1rpx solid #ECE8E2;
+  box-shadow: 0 2rpx 12rpx rgba(31, 27, 24, 0.04);
+}
+
+/* ========================================
+   区块标题（36rpx 加粗 + 左侧 4rpx×28rpx 主色竖条 + 查看全部右对齐）
+   ======================================== */
+.g-section {
+  margin-bottom: 56rpx;
+}
+.g-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+.g-section-title-bar {
+  display: flex;
+  align-items: center;
+}
+.g-section-accent {
+  width: 4rpx;
+  height: 28rpx;
+  border-radius: 2rpx;
+  background-color: #F28C48;
+  margin-right: 12rpx;
+  flex-shrink: 0;
+}
+.g-section-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #1F1B18;
+}
+.g-section-more {
+  font-size: 26rpx;
+  color: #F28C48;
+  padding: 8rpx 0;
+}
+
+/* ========================================
+   细线胶囊标签
+   ======================================== */
+.g-tag {
+  display: inline-block;
+  font-size: 22rpx;
+  color: #6E665E;
+  border: 1rpx solid #ECE8E2;
+  border-radius: 24rpx;
+  padding: 4rpx 16rpx;
+  line-height: 1.3;
+}
+.g-tag-checked {
+  color: #C0712E;
+  border-color: #C0712E;
+}
+
+/* ========================================
+   横向内容卡片（左封面 200×140 / 16rpx 圆角 + 正文）
+   ======================================== */
+.g-content-card {
+  display: flex;
+  flex-direction: row;
+  background-color: #FFFFFF;
+  border-radius: 20rpx;
+  border: 1rpx solid #ECE8E2;
+  padding: 16rpx;
+  margin-bottom: 16rpx;
+  box-shadow: 0 2rpx 12rpx rgba(31, 27, 24, 0.04);
+  transition: transform 150ms ease;
+}
+.g-content-card-hover {
+  transform: scale(0.98);
+}
+
+/* 封面 */
+.g-cover {
+  width: 200rpx;
+  height: 140rpx;
+  border-radius: 16rpx;
+  flex-shrink: 0;
+  overflow: hidden;
+  position: relative;
+}
+.g-cover-image {
+  width: 100%;
+  height: 100%;
+}
+
+/* 封面渐变占位 */
+.g-cover-ph-replay {
+  background: linear-gradient(135deg, #F2EBE3, #EADFD3);
+}
+.g-cover-ph-recipe {
+  background: linear-gradient(135deg, #F3EDE4, #ECE3D7);
+}
+.g-cover-ph-icon {
+  font-size: 40rpx;
+  opacity: 0.45;
+}
+.g-cover-ph-center {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 时长角标（封面右下角黑色半透明胶囊） */
+.g-cover-badge {
+  position: absolute;
+  right: 8rpx;
+  bottom: 8rpx;
+  font-size: 22rpx;
+  color: #FFFFFF;
+  background-color: rgba(0, 0, 0, 0.55);
+  border-radius: 16rpx;
+  padding: 2rpx 12rpx;
+  line-height: 1.6;
+}
+
+/* 卡片正文 */
+.g-card-body {
+  flex: 1;
+  margin-left: 16rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  overflow: hidden;
+}
+.g-card-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1F1B18;
+  line-height: 1.3;
+  margin-bottom: 4rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.g-card-desc {
+  font-size: 26rpx;
+  color: #6E665E;
+  line-height: 1.4;
+  margin-bottom: 6rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.g-card-meta {
+  font-size: 22rpx;
+  color: #A8A099;
+}
+
+/* 卡片标签行 */
+.g-card-tags {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8rpx;
+  margin-top: 4rpx;
+}
+.g-card-tag {
+  font-size: 22rpx;
+  color: #C0712E;
+  border: 1rpx solid #ECE8E2;
+  border-radius: 16rpx;
+  padding: 2rpx 12rpx;
+  line-height: 1.4;
+}
+
+/* ========================================
+   空态（渐变图标 + 友好文案）
+   ======================================== */
+.g-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 56rpx 0;
+}
+.g-empty-cover {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24rpx;
+}
+.g-empty-icon {
+  font-size: 48rpx;
+  opacity: 0.4;
+}
+.g-empty-title {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #6E665E;
+  margin-bottom: 4rpx;
+}
+.g-empty-desc {
+  font-size: 24rpx;
+  color: #A8A099;
+}
+
+/* ========================================
+   骨架屏（shimmer 动画）
+   ======================================== */
+.g-skeleton {
+  padding: 0 40rpx;
+  box-sizing: border-box;
+}
+
+/* 骨架线条 */
+.g-sk-line {
+  height: 20rpx;
+  border-radius: 6rpx;
+  background: linear-gradient(90deg, #F2EEEA 25%, #E8E2DC 50%, #F2EEEA 75%);
+  background-size: 200% 100%;
+  animation: g-shimmer 1.4s ease-in-out infinite;
+}
+.g-sk-line-short {
+  width: 140rpx;
+}
+.g-sk-line-mid {
+  width: 260rpx;
+}
+.g-sk-line-long {
+  width: 360rpx;
+}
+
+/* 骨架封面 */
+.g-sk-cover {
+  width: 200rpx;
+  height: 140rpx;
+  border-radius: 16rpx;
+  flex-shrink: 0;
+  background: linear-gradient(90deg, #F2EEEA 25%, #E8E2DC 50%, #F2EEEA 75%);
+  background-size: 200% 100%;
+  animation: g-shimmer 1.4s ease-in-out infinite;
+}
+
+/* 骨架卡片 */
+.g-sk-card {
+  display: flex;
+  flex-direction: row;
+  background-color: #FFFFFF;
+  border-radius: 20rpx;
+  border: 1rpx solid #ECE8E2;
+  padding: 16rpx;
+  margin-bottom: 16rpx;
+}
+.g-sk-card-body {
+  flex: 1;
+  margin-left: 16rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8rpx;
+}
+
+/* 骨架区块容器 */
+.g-sk-section {
+  margin-bottom: 56rpx;
+}
+.g-sk-section-header {
+  margin-bottom: 24rpx;
+}
+
+@keyframes g-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ========================================
+   辅助样式
+   ======================================== */
+.g-error-text {
+  font-size: 26rpx;
+  color: #6E665E;
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: 40rpx;
+}
+.g-retry-btn {
+  width: 240rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 28rpx;
+  color: #6E665E;
+  background-color: #FFFFFF;
+  border: 1rpx solid #ECE8E2;
+  border-radius: 40rpx;
+}
+.g-load-more {
+  padding: 24rpx 0 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.g-load-more-text {
+  font-size: 24rpx;
+  color: #A8A099;
+}
+.g-divider {
+  height: 1rpx;
+  background-color: #ECE8E2;
+}
+
+/* 底部安全区（TabBar） */
+.g-bottom-safe {
+  height: 160rpx;
+}

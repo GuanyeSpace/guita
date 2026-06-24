@@ -1,52 +1,89 @@
-<view class="container">
-  <view wx:if="{{loading}}" class="center">
-    <text class="status-text">正在加载回放...</text>
+<scroll-view scroll-y class="g-container container">
+  <!-- ===== 骨架屏 ===== -->
+  <view wx:if="{{loading}}" class="g-skeleton">
+    <view class="g-sk-section">
+      <view class="g-sk-section-header">
+        <view class="g-sk-line g-sk-line-mid"></view>
+      </view>
+      <block wx:for="{{[1,2,3,4,5]}}" wx:key="*this">
+        <view class="g-sk-card">
+          <view class="g-sk-cover"></view>
+          <view class="g-sk-card-body">
+            <view class="g-sk-line g-sk-line-long"></view>
+            <view class="g-sk-line g-sk-line-mid"></view>
+            <view class="g-sk-line g-sk-line-short"></view>
+          </view>
+        </view>
+      </block>
+    </view>
   </view>
 
-  <view wx:elif="{{error}}" class="center">
-    <text class="error-text">{{error}}</text>
-    <button class="retry-btn" bindtap="onRetry">重试</button>
+  <!-- ===== 错误 ===== -->
+  <view wx:elif="{{error}}" class="g-center">
+    <text class="g-error-text">{{error}}</text>
+    <button class="g-retry-btn" bindtap="onRetry">重试</button>
   </view>
 
-  <block wx:else>
+  <!-- ===== 正常内容 ===== -->
+  <view wx:else class="g-content-padded content">
+    <!-- 页面标题 -->
     <view class="header">
-      <text class="header-title">直播回放</text>
-      <text class="header-desc">这里会展示你当前老师的直播回放。</text>
+      <view class="g-section-title-bar">
+        <view class="g-section-accent"></view>
+        <text class="g-section-title">直播回放</text>
+      </view>
     </view>
 
-    <view wx:if="{{list.length === 0}}" class="empty-box">
-      <text class="empty-text">暂时还没有直播回放。</text>
+    <!-- 空态 -->
+    <view wx:if="{{list.length === 0}}" class="g-empty">
+      <view class="g-empty-cover g-cover-ph-replay">
+        <text class="g-empty-icon">▶</text>
+      </view>
+      <text class="g-empty-title">这位老师还没有回放</text>
+      <text class="g-empty-desc">敬请期待</text>
     </view>
 
-    <view wx:else class="list">
+    <!-- 列表 -->
+    <view wx:else>
       <view
         wx:for="{{list}}"
         wx:key="_id"
-        class="card"
+        class="g-content-card"
+        hover-class="g-content-card-hover"
         data-id="{{item._id}}"
         bindtap="onTapItem"
       >
-        <view class="card-cover">
-          <image wx:if="{{item.cover_url}}" src="{{item.cover_url}}" mode="aspectFill" />
-          <text wx:else class="cover-text">回放</text>
-        </view>
-        <view class="card-body">
-          <text class="card-title">{{item.title}}</text>
-          <text class="card-desc">{{item.description}}</text>
-          <view class="card-meta">
-            <text class="meta-text">时长：{{formatDuration(item.duration_sec)}}</text>
-            <text class="meta-text">{{formatDate(item.published_at)}}</text>
+        <view class="g-cover g-cover-ph-replay">
+          <image
+            wx:if="{{item.cover_url && !item._coverError}}"
+            src="{{item.cover_url}}"
+            mode="aspectFill"
+            class="g-cover-image"
+            binderror="onCoverError"
+            data-id="{{item._id}}"
+          />
+          <view wx:else class="g-cover-ph-center g-cover-ph-replay">
+            <text class="g-cover-ph-icon">▶</text>
           </view>
-          <view wx:if="{{item.tags && item.tags.length}}" class="tags">
-            <text wx:for="{{item.tags}}" wx:key="*this" wx:for-item="tag" class="tag">{{tag}}</text>
+          <view wx:if="{{item.displayDuration}}" class="g-cover-badge">{{item.displayDuration}}</view>
+        </view>
+        <view class="g-card-body">
+          <text class="g-card-title">{{item.title}}</text>
+          <text class="g-card-desc">{{item.description}}</text>
+          <view class="g-card-tags">
+            <text wx:if="{{item.tags && item.tags.length}}" wx:for="{{item.tags}}" wx:key="*this" wx:for-item="tag" class="g-card-tag">{{tag}}</text>
+            <text class="g-card-meta">{{formatDate(item.published_at)}}</text>
           </view>
         </view>
       </view>
 
-      <view class="load-more">
-        <text wx:if="{{loadingMore}}" class="status-text">正在加载更多...</text>
-        <text wx:elif="{{!hasMore}}" class="status-text">已经到底了。</text>
+      <!-- 加载更多 -->
+      <view class="g-load-more">
+        <text wx:if="{{loadingMore}}" class="g-load-more-text">正在加载更多...</text>
+        <text wx:elif="{{!hasMore}}" class="g-load-more-text">已经到底了</text>
       </view>
     </view>
-  </block>
-</view>
+
+    <view class="g-bottom-safe"></view>
+  </view>
+</scroll-view>

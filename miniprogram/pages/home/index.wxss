@@ -1,55 +1,19 @@
 /* ========================================
-   归她 · 首页视觉规范
-   主色 #F28C48 / 深 #D9722E / 浅 #FFF3E6
-   页面背景 #FCFBF9  卡片白 #FFFFFF
-   描边 #ECE8E2  阴影 0 2rpx 12rpx rgba(31,27,24,0.04)
-   文本 #1F1B18 / #6E665E / #A8A099
-   间距刻度 8/16/24/32/40/56 rpx
+   归她 · 首页
+   ── 页面特有样式（公共样式见 styles/common.wxss）
+   主色 #F28C48 / 页面背景 #FCFBF9
    ======================================== */
 
-/* ===== 容器 ===== */
+/* 容器微调 */
 .container {
   min-height: 100vh;
   background-color: #FCFBF9;
 }
-
-/* ===== 出错 ===== */
-.center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  padding: 40rpx;
-  box-sizing: border-box;
-}
-.error-text {
-  font-size: 26rpx;
-  color: #6E665E;
-  text-align: center;
-  line-height: 1.6;
-  margin-bottom: 40rpx;
-}
-.retry-btn {
-  width: 240rpx;
-  height: 80rpx;
-  line-height: 80rpx;
-  font-size: 28rpx;
-  color: #6E665E;
-  background-color: #FFFFFF;
-  border: 1rpx solid #ECE8E2;
-  border-radius: 40rpx;
-}
-
-/* ===== 正文区域 ===== */
 .content {
-  padding: 0 40rpx;
-  box-sizing: border-box;
+  /* g-content-padded 已提供 padding: 0 40rpx */
 }
 
-/* --------------------------------------------------
-   1. 顶部问候区（近白暖灰背景 + 极淡过渡，不做明显色块）
-   -------------------------------------------------- */
+/* ===== 顶部问候区 ===== */
 .greeting {
   padding-top: 40rpx;
   padding-bottom: 40rpx;
@@ -78,18 +42,12 @@
   color: #F28C48;
 }
 
-/* --------------------------------------------------
-   2. 主播卡片（白底圆角 + 1rpx 细线 + 极克制阴影）
-   -------------------------------------------------- */
+/* ===== 主播卡片（基于 g-card） ===== */
 .teacher-card {
   display: flex;
   align-items: center;
-  background-color: #FFFFFF;
-  border-radius: 20rpx;
-  border: 1rpx solid #ECE8E2;
   padding: 24rpx;
   margin-bottom: 56rpx;
-  box-shadow: 0 2rpx 12rpx rgba(31, 27, 24, 0.04);
 }
 .teacher-avatar {
   width: 96rpx;
@@ -130,231 +88,15 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-/* 细线胶囊标签 */
 .teacher-tags {
   display: flex;
   flex-direction: row;
   gap: 8rpx;
   flex-wrap: wrap;
 }
-.teacher-tag {
-  display: inline-block;
-  font-size: 22rpx;
-  color: #6E665E;
-  border: 1rpx solid #ECE8E2;
-  border-radius: 24rpx;
-  padding: 4rpx 16rpx;
-  line-height: 1.3;
-}
-.teacher-tag-checked {
-  color: #C0712E;
-  border-color: #C0712E;
-}
 
-/* --------------------------------------------------
-   3. 区块标题（36rpx 加粗 + 左侧主色竖条 + 查看全部右对齐）
-   -------------------------------------------------- */
-.section {
-  margin-bottom: 56rpx;
-}
-.section-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24rpx;
-}
-.section-title-bar {
-  display: flex;
-  align-items: center;
-}
-.section-accent {
-  width: 4rpx;
-  height: 28rpx;
-  border-radius: 2rpx;
-  background-color: #F28C48;
-  margin-right: 12rpx;
-  flex-shrink: 0;
-}
-.section-title {
-  font-size: 36rpx;
-  font-weight: 600;
-  color: #1F1B18;
-}
-.section-more {
-  font-size: 26rpx;
-  color: #F28C48;
-  padding: 8rpx 0;
-}
-
-/* --------------------------------------------------
-   4. 回放 / 食谱卡片（横向布局，封面 200×140，时长角标）
-   -------------------------------------------------- */
-.content-card {
-  display: flex;
-  flex-direction: row;
-  background-color: #FFFFFF;
-  border-radius: 20rpx;
-  border: 1rpx solid #ECE8E2;
-  padding: 16rpx;
-  margin-bottom: 16rpx;
-  box-shadow: 0 2rpx 12rpx rgba(31, 27, 24, 0.04);
-  transition: transform 150ms ease;
-}
-/* 按压微交互 */
-.card-hover {
-  transform: scale(0.98);
-}
-
-/* 封面 */
-.card-cover {
-  width: 200rpx;
-  height: 140rpx;
-  border-radius: 16rpx;
-  flex-shrink: 0;
-  overflow: hidden;
-  position: relative;
-}
-.cover-image {
-  width: 100%;
-  height: 100%;
-}
-
-/* 封面渐变占位 */
-.replay-cover-bg {
-  background: linear-gradient(135deg, #F2EBE3, #EADFD3);
-}
-.recipe-cover-bg {
-  background: linear-gradient(135deg, #F3EDE4, #ECE3D7);
-}
-
-/* 无封面占位 */
-.cover-placeholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.replay-ph {
-  background: linear-gradient(135deg, #F2EBE3, #EADFD3);
-}
-.recipe-ph {
-  background: linear-gradient(135deg, #F3EDE4, #ECE3D7);
-}
-.cover-ph-icon {
-  font-size: 40rpx;
-  opacity: 0.45;
-}
-
-/* 时长角标（封面右下角黑色半透明胶囊） */
-.cover-badge {
-  position: absolute;
-  right: 8rpx;
-  bottom: 8rpx;
-  font-size: 22rpx;
-  color: #FFFFFF;
-  background-color: rgba(0, 0, 0, 0.55);
-  border-radius: 16rpx;
-  padding: 2rpx 12rpx;
-  line-height: 1.6;
-}
-
-/* 卡片正文 */
-.card-body {
-  flex: 1;
-  margin-left: 16rpx;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-width: 0;
-  overflow: hidden;
-}
-.card-title {
-  font-size: 32rpx;
-  font-weight: 600;
-  color: #1F1B18;
-  line-height: 1.3;
-  margin-bottom: 4rpx;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.card-desc {
-  font-size: 26rpx;
-  color: #6E665E;
-  line-height: 1.4;
-  margin-bottom: 6rpx;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.card-meta-text {
-  font-size: 22rpx;
-  color: #A8A099;
-}
-
-/* 卡片标签（细线胶囊） */
-.card-tags {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 8rpx;
-  margin-top: 4rpx;
-}
-.card-tag {
-  font-size: 22rpx;
-  color: #C0712E;
-  border: 1rpx solid #ECE8E2;
-  border-radius: 16rpx;
-  padding: 2rpx 12rpx;
-  line-height: 1.4;
-}
-
-/* --------------------------------------------------
-   5-a. 空态（渐变封面图标 + 友好文案）
-   -------------------------------------------------- */
-.empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 56rpx 0;
-}
-.empty-cover {
-  width: 160rpx;
-  height: 160rpx;
-  border-radius: 24rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 24rpx;
-}
-.empty-cover-icon {
-  font-size: 48rpx;
-  opacity: 0.4;
-}
-.replay-ph-bg {
-  background: linear-gradient(135deg, #F2EBE3, #EADFD3);
-}
-.recipe-ph-bg {
-  background: linear-gradient(135deg, #F3EDE4, #ECE3D7);
-}
-.empty-title {
-  font-size: 28rpx;
-  font-weight: 500;
-  color: #6E665E;
-  margin-bottom: 4rpx;
-}
-.empty-desc {
-  font-size: 24rpx;
-  color: #A8A099;
-}
-
-/* --------------------------------------------------
-   6. 底部免责声明（22rpx 弱文本 + 上分隔线）
-   -------------------------------------------------- */
+/* ===== 底部 ===== */
 .disclaimer-divider {
-  height: 1rpx;
-  background-color: #ECE8E2;
   margin-top: 8rpx;
   margin-bottom: 24rpx;
 }
@@ -367,31 +109,15 @@
   color: #A8A099;
   line-height: 1.5;
 }
-.bottom-safe {
-  height: 160rpx;
-}
 
-/* --------------------------------------------------
-   5-b. 骨架屏
-   -------------------------------------------------- */
-.skeleton {
-  padding: 0 40rpx;
-  box-sizing: border-box;
-}
-
-/* 问候骨架 */
+/* ===== 骨架屏（页面特有布局） ===== */
 .sk-greeting {
   padding-top: 40rpx;
   padding-bottom: 32rpx;
 }
-
-/* 主播卡片骨架 */
 .sk-teacher {
   display: flex;
   align-items: center;
-  background-color: #FFFFFF;
-  border-radius: 20rpx;
-  border: 1rpx solid #ECE8E2;
   padding: 24rpx;
   margin-bottom: 56rpx;
 }
@@ -401,7 +127,7 @@
   border-radius: 50%;
   background: linear-gradient(90deg, #F2EEEA 25%, #E8E2DC 50%, #F2EEEA 75%);
   background-size: 200% 100%;
-  animation: shimmer 1.4s ease-in-out infinite;
+  animation: g-shimmer 1.4s ease-in-out infinite;
   flex-shrink: 0;
 }
 .sk-teacher-info {
@@ -410,68 +136,4 @@
   display: flex;
   flex-direction: column;
   gap: 12rpx;
-}
-
-/* 区块骨架 */
-.sk-section {
-  margin-bottom: 56rpx;
-}
-.sk-section-header {
-  margin-bottom: 24rpx;
-}
-
-/* 卡片骨架 */
-.sk-card {
-  display: flex;
-  flex-direction: row;
-  background-color: #FFFFFF;
-  border-radius: 20rpx;
-  border: 1rpx solid #ECE8E2;
-  padding: 16rpx;
-  margin-bottom: 16rpx;
-}
-.sk-cover {
-  width: 200rpx;
-  height: 140rpx;
-  border-radius: 16rpx;
-  background: linear-gradient(90deg, #F2EEEA 25%, #E8E2DC 50%, #F2EEEA 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.4s ease-in-out infinite;
-  flex-shrink: 0;
-}
-.sk-card-body {
-  flex: 1;
-  margin-left: 16rpx;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 8rpx;
-}
-
-/* 骨架线条 */
-.sk-line {
-  height: 20rpx;
-  border-radius: 6rpx;
-  background: linear-gradient(90deg, #F2EEEA 25%, #E8E2DC 50%, #F2EEEA 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.4s ease-in-out infinite;
-}
-.sk-line-short {
-  width: 140rpx;
-}
-.sk-line-mid {
-  width: 260rpx;
-}
-.sk-line-long {
-  width: 360rpx;
-}
-
-/* 骨架闪烁动画 */
-@keyframes shimmer {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
 }
