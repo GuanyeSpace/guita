@@ -137,3 +137,49 @@
   flex-direction: column;
   gap: 12rpx;
 }
+
+/* ===== 游客引导态 ===== */
+.guest-icon-area {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FFF3E6, #FFE8D0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32rpx;
+}
+.guest-icon {
+  font-size: 48rpx;
+}
+.guest-title {
+  display: block;
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #1F1B18;
+  margin-bottom: 12rpx;
+}
+.guest-desc {
+  display: block;
+  font-size: 26rpx;
+  color: #6E665E;
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: 40rpx;
+  padding: 0 24rpx;
+}
+.guest-login-btn {
+  width: 360rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #FFFFFF;
+  background: linear-gradient(135deg, #E98B4A, #F28C48);
+  border-radius: 44rpx;
+  border: none;
+  box-shadow: 0 4rpx 12rpx rgba(233, 139, 74, 0.3);
+}
+.guest-login-btn::after {
+  border: none;
+}

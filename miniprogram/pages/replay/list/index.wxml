@@ -24,6 +24,16 @@
     <button class="g-retry-btn" bindtap="onRetry">重试</button>
   </view>
 
+  <!-- ===== 游客引导 ===== -->
+  <view wx:elif="{{guest}}" class="g-center">
+    <view class="guest-icon-area">
+      <text class="guest-icon">🔒</text>
+    </view>
+    <text class="guest-title">登录后可按主播查看回放</text>
+    <text class="guest-desc">绑定手机号并选择老师后，即可浏览直播回放列表</text>
+    <button class="guest-btn" bindtap="onGoLogin">立即登录</button>
+  </view>
+
   <!-- ===== 正常内容 ===== -->
   <view wx:else class="g-content-padded content">
     <!-- 页面标题 -->

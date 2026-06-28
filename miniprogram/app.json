@@ -1,15 +1,17 @@
 {
   "pages": [
+    "pages/home/index",
     "pages/auth/index",
     "pages/bind-phone/index",
     "pages/host-select/index",
-    "pages/home/index",
     "pages/replay/list/index",
     "pages/replay/detail/index",
     "pages/recipe/list/index",
     "pages/recipe/detail/index",
     "pages/preview/index",
-    "pages/profile/index"
+    "pages/profile/index",
+    "pages/agreement/user/index",
+    "pages/agreement/privacy/index"
   ],
   "window": {
     "navigationBarTitleText": "归她",
@@ -51,5 +53,6 @@
   },
   "style": "v2",
   "sitemapLocation": "sitemap.json",
-  "lazyCodeLoading": "requiredComponents"
+  "lazyCodeLoading": "requiredComponents",
+  "__usePrivacyCheck__": true
 }

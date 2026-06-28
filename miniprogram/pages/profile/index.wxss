@@ -211,6 +211,28 @@
   border: none;
 }
 
+/* ===== 管理工具 ===== */
+.admin-card {
+  display: flex;
+  align-items: center;
+  padding: 24rpx;
+}
+.admin-text {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #2C2C2C;
+}
+.admin-desc {
+  flex: 1;
+  font-size: 22rpx;
+  color: #999;
+  margin-left: 16rpx;
+}
+.admin-arrow {
+  font-size: 28rpx;
+  color: #CCC;
+}
+
 /* ===== 帮助区域 ===== */
 .help-card {
   padding: 20rpx 24rpx;
@@ -224,4 +246,50 @@
 }
 .help-text:last-child {
   margin-bottom: 0;
+}
+
+/* ===== 游客引导态 ===== */
+.guest-icon-area {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FFF3E6, #FFE8D0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32rpx;
+}
+.guest-icon {
+  font-size: 48rpx;
+}
+.guest-title {
+  display: block;
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #2C2C2C;
+  margin-bottom: 12rpx;
+}
+.guest-desc {
+  display: block;
+  font-size: 26rpx;
+  color: #666666;
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: 40rpx;
+  padding: 0 24rpx;
+}
+.guest-btn {
+  width: 360rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #FFFFFF;
+  background: linear-gradient(135deg, #E98B4A, #F28C48);
+  border-radius: 44rpx;
+  border: none;
+  box-shadow: 0 4rpx 12rpx rgba(233, 139, 74, 0.3);
+}
+.guest-btn::after {
+  border: none;
 }

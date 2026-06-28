@@ -6,6 +6,21 @@
     <text class="title">绑定手机号</text>
     <text class="desc">绑定手机号后即可使用归她\n查看直播回放和精选食谱</text>
 
+    <!-- 协议勾选区 -->
+    <view class="agreement-section {{shakeAgreement ? 'agreement-shake' : ''}}">
+      <view class="checkbox-row" bindtap="onToggleAgreement">
+        <view class="checkbox {{agreed ? 'checkbox-checked' : ''}}">
+          <text wx:if="{{agreed}}" class="checkbox-icon">✓</text>
+        </view>
+        <text class="agreement-text">
+          我已阅读并同意
+          <text class="agreement-link" catchtap="onOpenUserAgreement">《用户服务协议》</text>
+          和
+          <text class="agreement-link" catchtap="onOpenPrivacyPolicy">《隐私政策》</text>
+        </text>
+      </view>
+    </view>
+
     <button
       class="bind-btn"
       open-type="getPhoneNumber"
@@ -21,7 +36,5 @@
     <view wx:if="{{error}}" class="error-box">
       <text class="error-text">{{error}}</text>
     </view>
-
-    <text class="agreement">点击上方按钮即表示同意《用户服务协议》</text>
   </view>
 </view>

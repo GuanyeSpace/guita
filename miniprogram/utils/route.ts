@@ -1,3 +1,7 @@
+export function navigateToAuth() {
+  wx.navigateTo({ url: '/pages/auth/index' })
+}
+
 export function redirectToAuth() {
   wx.redirectTo({ url: '/pages/auth/index' })
 }

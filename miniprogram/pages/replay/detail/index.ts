@@ -1,5 +1,4 @@
 import { callFunction } from '../../../utils/request'
-import { redirectToHostSelect, redirectToBindPhone } from '../../../utils/route'
 import type { ContentDetailData } from '../../../types/cloud'
 import { formatDate, formatDuration } from '../../../utils/format'
 import { track } from '../../../utils/track'
@@ -70,12 +69,9 @@ Page({
     } catch (e) {
       const msg = (e as Error).message || '刚刚网络有点慢，再试一次好么？'
 
-      if (msg.includes('暂未绑定主播')) {
-        redirectToHostSelect()
-        return
-      }
-      if (msg.includes('请先绑定手机号')) {
-        redirectToBindPhone()
+      // 游客态：不强制跳转，展示不可访问提示
+      if (msg.includes('暂未绑定主播') || msg.includes('请先绑定手机号') || msg.includes('用户不存在')) {
+        this.setData({ loading: false, inaccessible: true })
         return
       }
       if (msg.includes('内容不存在') || msg.includes('暂不可访问') || msg.includes('类型不正确')) {

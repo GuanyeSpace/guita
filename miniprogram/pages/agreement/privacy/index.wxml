@@ -1,0 +1,171 @@
+<scroll-view scroll-y class="g-container">
+  <view class="g-content-padded content">
+    <!-- 标题区 -->
+    <view class="title-section">
+      <text class="title-main">归她 · 隐私政策</text>
+      <text class="title-sub">我们重视您的隐私。请仔细阅读本隐私政策。</text>
+    </view>
+
+    <view class="g-divider"></view>
+
+    <!-- 一、引言 -->
+    <view class="clause">
+      <text class="clause-index">一、</text>
+      <view class="clause-body">
+        <text class="clause-title">引言</text>
+        <text class="clause-text">
+          归她小程序（以下简称"我们"）深知个人信息对您的重要性，我们将严格遵守法律法规，
+          采取相应的安全保护措施，尽力保护您的个人信息安全。
+        </text>
+        <text class="clause-text">
+          本隐私政策旨在向您说明我们如何收集、使用、存储和保护您的个人信息，
+          以及您享有的相关权利。
+        </text>
+      </view>
+    </view>
+
+    <!-- 二、信息收集对照表 ⭐ 审核关键 -->
+    <view class="clause">
+      <text class="clause-index">二、</text>
+      <view class="clause-body">
+        <text class="clause-title">信息收集对照表</text>
+        <text class="clause-text">
+          下表明确列出了我们收集的个人信息类型、收集目的与用途，以及收集方式和场景。
+        </text>
+
+        <!-- 对照表 -->
+        <view class="table-wrapper">
+          <view class="table-row table-header">
+            <text class="table-cell col-type">信息类型</text>
+            <text class="table-cell col-purpose">收集目的与用途</text>
+            <text class="table-cell col-method">收集方式与场景</text>
+          </view>
+          <view class="table-row">
+            <text class="table-cell col-type">微信账号标识（OpenID）</text>
+            <text class="table-cell col-purpose">用于识别用户身份、关联账号数据，实现登录与内容个性化展示</text>
+            <text class="table-cell col-method">首次打开小程序时，通过微信云开发自动获取</text>
+          </view>
+          <view class="table-row">
+            <text class="table-cell col-type">手机号码</text>
+            <text class="table-cell col-purpose">用于实名认证、账号安全保护、内容访问权限控制</text>
+            <text class="table-cell col-method">用户主动点击"一键绑定手机号"按钮时，通过微信手机号快速验证能力获取</text>
+          </view>
+          <view class="table-row">
+            <text class="table-cell col-type">内容浏览与播放记录</text>
+            <text class="table-cell col-purpose">用于记录观看进度、打卡数据，提供个性化内容推荐</text>
+            <text class="table-cell col-method">用户在浏览回放、查看食谱过程中自动记录</text>
+          </view>
+          <view class="table-row">
+            <text class="table-cell col-type">主播绑定关系</text>
+            <text class="table-cell col-purpose">用于建立用户与主播之间的内容关联，展示该主播专属的回放与食谱</text>
+            <text class="table-cell col-method">用户主动选择主播时生成绑定记录</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 三、信息使用规则 -->
+    <view class="clause">
+      <text class="clause-index">三、</text>
+      <view class="clause-body">
+        <text class="clause-title">信息使用规则</text>
+        <text class="clause-text">
+          1. 我们仅在实现上述目的所必需的范围内使用您的个人信息。
+        </text>
+        <text class="clause-text">
+          2. 未经您的明确同意，我们不会将您的个人信息用于本政策所述目的之外的任何用途。
+        </text>
+        <text class="clause-text">
+          3. 我们不会主动向任何第三方共享、转让或公开披露您的个人信息，下列情形除外：
+        </text>
+        <text class="clause-text">
+          · 取得您的明确同意；
+        </text>
+        <text class="clause-text">
+          · 根据法律法规要求或政府机关强制性要求；
+        </text>
+        <text class="clause-text">
+          · 与我们的关联方或授权合作伙伴共享，且仅用于实现本政策所述目的。
+        </text>
+      </view>
+    </view>
+
+    <!-- 四、信息安全 -->
+    <view class="clause">
+      <text class="clause-index">四、</text>
+      <view class="clause-body">
+        <text class="clause-title">信息安全保护</text>
+        <text class="clause-text">
+          我们采取了符合业界标准的安全防护措施来保护您的个人信息，
+          包括但不限于数据加密传输（HTTPS）、访问权限控制、定期安全审计等。
+          您的数据存储在腾讯云微信云开发环境中，享受微信平台的安全保障。
+        </text>
+      </view>
+    </view>
+
+    <!-- 五、信息存储 -->
+    <view class="clause">
+      <text class="clause-index">五、</text>
+      <view class="clause-body">
+        <text class="clause-title">信息存储</text>
+        <text class="clause-text">
+          您的个人信息存储于中华人民共和国境内的服务器中。
+          我们仅在实现目的所需的最短时间内保留您的个人信息，
+          除非法律法规另有要求。
+        </text>
+      </view>
+    </view>
+
+    <!-- 六、用户权利 -->
+    <view class="clause">
+      <text class="clause-index">六、</text>
+      <view class="clause-body">
+        <text class="clause-title">您的权利</text>
+        <text class="clause-text">
+          您有权查询、更正、删除您的个人信息，以及撤回已授予的授权同意。
+        </text>
+        <text class="clause-text">
+          如需行使上述权利，或对本隐私政策有任何疑问、意见或建议，
+          请通过小程序内"我的"页面的联系方式与工作人员取得联系。
+        </text>
+        <text class="clause-text">
+          撤回授权同意不影响撤回前基于您同意已进行的个人信息处理活动的效力。
+        </text>
+      </view>
+    </view>
+
+    <!-- 七、未成年人保护 -->
+    <view class="clause">
+      <text class="clause-index">七、</text>
+      <view class="clause-body">
+        <text class="clause-title">未成年人保护</text>
+        <text class="clause-text">
+          本小程序主要面向成年用户。如您未满 18 周岁，请在监护人陪同下阅读本政策，
+          并在取得监护人同意后使用本小程序。
+        </text>
+      </view>
+    </view>
+
+    <!-- 八、政策更新 -->
+    <view class="clause">
+      <text class="clause-index">八、</text>
+      <view class="clause-body">
+        <text class="clause-title">隐私政策更新</text>
+        <text class="clause-text">
+          我们可能适时修订本隐私政策。当政策发生重大变更时，
+          我们将在小程序内以显著方式通知您。
+          继续使用本小程序即表示您同意修订后的政策。
+        </text>
+      </view>
+    </view>
+
+    <view class="g-divider"></view>
+
+    <!-- 生效日期 -->
+    <view class="footer">
+      <text class="footer-text">本隐私政策生效日期：2025 年 7 月 1 日</text>
+    </view>
+
+    <view class="g-bottom-safe"></view>
+  </view>
+</scroll-view>

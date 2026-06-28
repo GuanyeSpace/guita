@@ -1,5 +1,5 @@
 import { callFunction } from '../../utils/request'
-import { redirectToHostSelect, redirectToBindPhone, switchToReplayList, switchToRecipeList } from '../../utils/route'
+import { navigateToAuth, switchToReplayList, switchToRecipeList } from '../../utils/route'
 import type { GetMyHostData, ContentListData } from '../../types/cloud'
 import { formatDate, formatDuration } from '../../utils/format'
 import { track } from '../../utils/track'
@@ -31,6 +31,7 @@ Page({
   data: {
     loading: true,
     error: '',
+    guest: false,
     host: null as Record<string, unknown> | null,
     replays: [] as Record<string, unknown>[],
     recipes: [] as Record<string, unknown>[],
@@ -118,9 +119,9 @@ Page({
     }
   },
 
-  /* ========== 全量加载（首次 / 下拉刷新，显示骨架屏） ========== */
+    /* ========== 全量加载（首次 / 下拉刷新，显示骨架屏） ========== */
   async loadHome() {
-    this.setData({ loading: true, error: '' })
+    this.setData({ loading: true, error: '', guest: false })
 
     try {
       const data = await this._fetchHomeData()
@@ -131,16 +132,16 @@ Page({
       })
 
       this._dataLoaded = true
-      track('guita.home.view', { host_id: (data.host as Record<string, unknown>)._id as string })
+      if (data.host) {
+        track('guita.home.view', { host_id: (data.host as Record<string, unknown>)._id as string })
+      }
     } catch (e) {
       const msg = (e as Error).message || '刚刚网络有点慢，再试一次好么？'
 
-      if (msg.includes('暂未绑定主播')) {
-        redirectToHostSelect()
-        return
-      }
-      if (msg.includes('请先绑定手机号')) {
-        redirectToBindPhone()
+      // 游客态：未登录/未绑定时不强制跳转，展示引导入口
+      if (msg.includes('暂未绑定主播') || msg.includes('请先绑定手机号') || msg.includes('用户不存在')) {
+        this.setData({ loading: false, guest: true, host: null, replays: [], recipes: [], replaysEmpty: true, recipesEmpty: true })
+        this._dataLoaded = true
         return
       }
 
@@ -172,6 +173,10 @@ Page({
 
   onRetry() {
     this.loadHome()
+  },
+
+  onGoLogin() {
+    navigateToAuth()
   },
 
   onViewAllReplays() {

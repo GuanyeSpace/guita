@@ -12,6 +12,16 @@
     <text class="error-text">当前账号暂不可用，如有疑问请联系工作人员。</text>
   </view>
 
+  <!-- ===== 游客引导（未绑定手机号） ===== -->
+  <view wx:elif="{{guest}}" class="center">
+    <view class="guest-icon-area">
+      <text class="guest-icon">👤</text>
+    </view>
+    <text class="guest-title">登录后可使用完整功能</text>
+    <text class="guest-desc">绑定手机号后即可查看个人信息、绑定老师</text>
+    <button class="guest-btn" bindtap="onGoLogin">立即登录</button>
+  </view>
+
   <block wx:else>
     <view class="page-title">我的</view>
 

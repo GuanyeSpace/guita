@@ -1,0 +1,122 @@
+<scroll-view scroll-y class="g-container">
+  <view class="g-content-padded content">
+    <!-- 标题区 -->
+    <view class="title-section">
+      <text class="title-main">归她 · 用户服务协议</text>
+      <text class="title-sub">欢迎使用归她小程序。请仔细阅读以下条款。</text>
+    </view>
+
+    <view class="g-divider"></view>
+
+    <!-- 第一条：服务说明 -->
+    <view class="clause">
+      <text class="clause-index">一、</text>
+      <view class="clause-body">
+        <text class="clause-title">服务说明</text>
+        <text class="clause-text">
+          归她（以下简称"本小程序"）是一款面向女性用户的饮食与健康内容平台，提供直播回放观看、食谱浏览、
+          内容打卡记录等服务。本小程序由开发者运营，用户在注册并使用本小程序前应充分阅读并理解本协议全部条款。
+        </text>
+        <text class="clause-text">
+          用户在使用本小程序的过程中，即视为已阅读并同意接受本协议的约束。如不同意本协议任一内容，
+          请停止使用本小程序。
+        </text>
+      </view>
+    </view>
+
+    <!-- 第二条：账号注册与使用 -->
+    <view class="clause">
+      <text class="clause-index">二、</text>
+      <view class="clause-body">
+        <text class="clause-title">账号注册与使用</text>
+        <text class="clause-text">
+          1. 用户使用本小程序时，系统将通过微信账号自动识别用户身份并创建账号。
+        </text>
+        <text class="clause-text">
+          2. 用户可使用"一键绑定手机号"功能完成手机号绑定，以使用完整服务功能。
+          您应保证所提供手机号为本人真实有效的手机号码。
+        </text>
+        <text class="clause-text">
+          3. 每个微信账号仅可绑定一个手机号。用户不得将账号转让、出借或出售给他人使用。
+        </text>
+        <text class="clause-text">
+          4. 用户有权随时停止使用本小程序。如需注销账号，请联系工作人员处理。
+        </text>
+      </view>
+    </view>
+
+    <!-- 第三条：用户行为规范 -->
+    <view class="clause">
+      <text class="clause-index">三、</text>
+      <view class="clause-body">
+        <text class="clause-title">用户行为规范</text>
+        <text class="clause-text">
+          用户在使用本小程序时，不得从事以下行为：
+        </text>
+        <text class="clause-text">
+          （1）违反法律法规或公序良俗的行为；
+        </text>
+        <text class="clause-text">
+          （2）利用技术手段干扰本小程序正常运行；
+        </text>
+        <text class="clause-text">
+          （3）未经授权收集、存储、使用其他用户的个人信息；
+        </text>
+        <text class="clause-text">
+          （4）发布违法、侵权、骚扰或虚假信息。
+        </text>
+      </view>
+    </view>
+
+    <!-- 第四条：知识产权 -->
+    <view class="clause">
+      <text class="clause-index">四、</text>
+      <view class="clause-body">
+        <text class="clause-title">知识产权</text>
+        <text class="clause-text">
+          本小程序内的所有内容（包括但不限于文字、图片、视频、音频、界面设计、程序代码等）
+          的知识产权归开发者或授权方所有。未经授权，禁止以任何形式转载、复制或使用。
+        </text>
+      </view>
+    </view>
+
+    <!-- 第五条：免责声明 -->
+    <view class="clause">
+      <text class="clause-index">五、</text>
+      <view class="clause-body">
+        <text class="clause-title">免责声明</text>
+        <text class="clause-text">
+          本小程序提供的内容（包括直播回放、食谱、饮食建议等）仅作为参考信息，
+          不构成医疗建议、诊断或治疗方案。用户在做出任何饮食或健康决定前，
+          应咨询专业医护人员的意见。开发者不对因依赖本小程序内容而产生的任何后果承担责任。
+        </text>
+        <text class="clause-text">
+          开发者将尽力保证服务的稳定性和安全性，但不对因不可抗力、网络故障、
+          系统维护等原因导致的服务中断承担责任。
+        </text>
+      </view>
+    </view>
+
+    <!-- 第六条：协议修改 -->
+    <view class="clause">
+      <text class="clause-index">六、</text>
+      <view class="clause-body">
+        <text class="clause-title">协议修改</text>
+        <text class="clause-text">
+          开发者有权根据法律法规变化和业务需要，适时修改本协议。
+          修改后的协议将在本小程序内公示。若用户继续使用本小程序，
+          即视为同意修改后的协议。
+        </text>
+      </view>
+    </view>
+
+    <view class="g-divider"></view>
+
+    <!-- 生效日期 -->
+    <view class="footer">
+      <text class="footer-text">本协议生效日期：2025 年 7 月 1 日</text>
+    </view>
+
+    <view class="g-bottom-safe"></view>
+  </view>
+</scroll-view>

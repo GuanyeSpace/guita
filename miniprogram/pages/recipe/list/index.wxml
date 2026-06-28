@@ -8,6 +8,16 @@
     <button class="retry-btn" bindtap="onRetry">重试</button>
   </view>
 
+  <!-- ===== 游客引导 ===== -->
+  <view wx:elif="{{guest}}" class="center">
+    <view class="guest-icon-area">
+      <text class="guest-icon">🔒</text>
+    </view>
+    <text class="guest-title">登录后可查看食谱</text>
+    <text class="guest-desc">绑定手机号并选择老师后，即可浏览精选食谱列表</text>
+    <button class="guest-btn" bindtap="onGoLogin">立即登录</button>
+  </view>
+
   <block wx:else>
     <view class="header">
       <text class="header-title">食谱</text>

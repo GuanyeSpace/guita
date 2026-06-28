@@ -1,5 +1,5 @@
 import { callFunction } from '../../../utils/request'
-import { redirectToHostSelect, redirectToBindPhone } from '../../../utils/route'
+import { navigateToAuth } from '../../../utils/route'
 import type { ContentListData } from '../../../types/cloud'
 import { formatDate } from '../../../utils/format'
 import { track } from '../../../utils/track'
@@ -19,6 +19,7 @@ Page({
     loadingMore: false,
     refreshing: false,
     error: '',
+    guest: false,
     list: [] as Record<string, unknown>[],
     page: 1,
     pageSize: 20,
@@ -68,6 +69,8 @@ Page({
         hasMore: list.length < res.data.total,
       })
 
+      wx.stopPullDownRefresh()
+
       if (page === 1) {
         track('guita.content.recipe_list_view', {
           host_id: list.length > 0 ? (list[0].host_id as string) : undefined,
@@ -76,12 +79,16 @@ Page({
     } catch (e) {
       const msg = (e as Error).message || '刚刚网络有点慢，再试一次好么？'
 
-      if (msg.includes('暂未绑定主播')) {
-        redirectToHostSelect()
-        return
-      }
-      if (msg.includes('请先绑定手机号')) {
-        redirectToBindPhone()
+      // 游客态：未登录/未绑定时不强制跳转
+      if (msg.includes('暂未绑定主播') || msg.includes('请先绑定手机号') || msg.includes('用户不存在')) {
+        this.setData({
+          loading: false,
+          refreshing: false,
+          loadingMore: false,
+          guest: true,
+          list: [],
+        })
+        wx.stopPullDownRefresh()
         return
       }
 
@@ -91,6 +98,8 @@ Page({
         loadingMore: false,
         error: '刚刚网络有点慢，再试一次好么？',
       })
+
+      wx.stopPullDownRefresh()
     }
   },
 
@@ -102,6 +111,10 @@ Page({
 
   onRetry() {
     this.loadFirstPage()
+  },
+
+  onGoLogin() {
+    navigateToAuth()
   },
 
   onTapItem(e: WechatMiniprogram.BaseEvent) {

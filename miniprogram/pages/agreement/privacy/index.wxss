@@ -1,0 +1,112 @@
+@import '../../../styles/common.wxss';
+
+.content {
+  padding-top: 48rpx;
+}
+
+/* 标题区 */
+.title-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16rpx 0 32rpx;
+}
+.title-main {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #1F1B18;
+  margin-bottom: 12rpx;
+}
+.title-sub {
+  font-size: 26rpx;
+  color: #A8A099;
+}
+.g-divider {
+  margin-bottom: 32rpx;
+}
+
+/* 条款 */
+.clause {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 40rpx;
+}
+.clause-index {
+  width: 48rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #F28C48;
+  flex-shrink: 0;
+  line-height: 1.8;
+}
+.clause-body {
+  flex: 1;
+  min-width: 0;
+}
+.clause-title {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1F1B18;
+  margin-bottom: 16rpx;
+}
+.clause-text {
+  display: block;
+  font-size: 28rpx;
+  color: #6E665E;
+  line-height: 1.8;
+  margin-bottom: 8rpx;
+}
+
+/* 信息收集对照表 */
+.table-wrapper {
+  margin-top: 16rpx;
+  border: 1rpx solid #ECE8E2;
+  border-radius: 12rpx;
+  overflow: hidden;
+}
+.table-row {
+  display: flex;
+  flex-direction: row;
+}
+.table-row + .table-row {
+  border-top: 1rpx solid #ECE8E2;
+}
+.table-header {
+  background-color: #FCFBF9;
+}
+.table-cell {
+  font-size: 24rpx;
+  color: #6E665E;
+  line-height: 1.6;
+  padding: 16rpx 12rpx;
+  box-sizing: border-box;
+}
+.table-header .table-cell {
+  font-weight: 600;
+  color: #1F1B18;
+}
+.col-type {
+  width: 28%;
+  flex-shrink: 0;
+}
+.col-purpose {
+  width: 36%;
+  flex-shrink: 0;
+}
+.col-method {
+  width: 36%;
+  flex-shrink: 0;
+}
+
+/* 底部生效日期 */
+.footer {
+  padding: 32rpx 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.footer-text {
+  font-size: 24rpx;
+  color: #A8A099;
+}

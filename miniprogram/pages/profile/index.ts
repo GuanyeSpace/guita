@@ -1,5 +1,5 @@
 import { callFunction } from '../../utils/request'
-import { redirectToBindPhone, redirectToHostSelect } from '../../utils/route'
+import { navigateToAuth, redirectToHostSelect } from '../../utils/route'
 import type { LoginData, GetMyHostData } from '../../types/cloud'
 import { maskPhone } from '../../utils/format'
 import { track } from '../../utils/track'
@@ -22,6 +22,7 @@ Page({
   data: {
     loading: true,
     error: '',
+    guest: false,
     user: null as Record<string, unknown> | null,
     host: null as Record<string, unknown> | null,
     binding: null as Record<string, unknown> | null,
@@ -81,13 +82,15 @@ Page({
 
   /* ========== 全量加载（首次，显示加载态） ========== */
   async loadProfile() {
-    this.setData({ loading: true, error: '', blocked: false, host: null, binding: null })
+    this.setData({ loading: true, error: '', blocked: false, host: null, binding: null, guest: false })
 
     try {
       const data = await this._fetchProfileData()
 
+      // 游客态：未绑定手机号 → 展示引导，不强制跳转
       if (data.status === 'need_phone') {
-        redirectToBindPhone()
+        this.setData({ loading: false, guest: true, user: data.user })
+        this._dataLoaded = true
         return
       }
 
@@ -118,7 +121,8 @@ Page({
     } catch (e) {
       const msg = (e as Error).message || '刚刚网络有点慢，再试一次好么？'
       if (msg.includes('请先绑定手机号')) {
-        redirectToBindPhone()
+        this.setData({ loading: false, guest: true })
+        this._dataLoaded = true
         return
       }
       this.setData({ loading: false, error: '刚刚网络有点慢，再试一次好么？' })
@@ -144,9 +148,13 @@ Page({
     }
   },
 
-  /* ========== 事件处理（不变） ========== */
+  /* ========== 事件处理 ========== */
   onRetry() {
     this.loadProfile()
+  },
+
+  onGoLogin() {
+    navigateToAuth()
   },
 
   onGoHostSelect() {
