@@ -1,3 +1,5 @@
+@import './styles/common.wxss';
+
 /* 归她 - Design Tokens (全站统一规范) */
 /*
   主色 #F28C48（小面积点缀）/ 深 #D9722E / 浅 #FFF3E6

@@ -14,8 +14,10 @@
 
   <view wx:else class="content">
     <view class="page-header">
-      <text class="title">选择你的老师</text>
-      <text class="desc">请选择 1 位老师。绑定后，小程序会展示这位老师的直播回放和食谱内容。</text>
+      <text class="title" wx:if="{{isGuest}}">选择一位老师预览</text>
+      <text class="title" wx:else>选择你的老师</text>
+      <text class="desc" wx:if="{{isGuest}}">选择后即可预览该老师的回放和食谱。登录后可彻底绑定。</text>
+      <text class="desc" wx:else>请选择 1 位老师。绑定后，小程序会展示这位老师的直播回放和食谱内容。</text>
     </view>
 
     <view

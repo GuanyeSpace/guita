@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>归她 - 管理后台</title>
+  <script src="https://static.cloudbase.net/cloudbase-js-sdk/latest/cloudbase.full.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/cos-js-sdk-v5/dist/cos-js-sdk-v5.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #F5F5F5; color: #333; min-height: 100vh; }
+    .container { max-width: 900px; margin: 0 auto; padding: 24px; }
+    .login-box { background: #fff; border-radius: 16px; padding: 48px 40px; max-width: 420px; margin: 120px auto; box-shadow: 0 2px 20px rgba(0,0,0,0.06); }
+    .login-box h1 { font-size: 28px; color: #E98B4A; text-align: center; margin-bottom: 8px; }
+    .login-box .subtitle { font-size: 14px; color: #999; text-align: center; margin-bottom: 32px; }
+    .login-box input { width: 100%; padding: 14px 16px; border: 1px solid #E5E5E5; border-radius: 10px; font-size: 15px; margin-bottom: 14px; outline: none; }
+    .login-box input:focus { border-color: #E98B4A; }
+    .login-box button { width: 100%; padding: 14px; background: #E98B4A; color: #fff; border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; }
+    .login-box .error { color: #E74C3C; font-size: 13px; text-align: center; margin-top: 8px; }
+
+    .header { background: #fff; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 4px rgba(0,0,0,0.04); margin-bottom: 24px; border-radius: 12px; }
+    .header h2 { font-size: 18px; color: #E98B4A; }
+    .header .user-info { font-size: 13px; color: #999; }
+    .header button { padding: 8px 20px; background: #f0f0f0; border: none; border-radius: 8px; cursor: pointer; font-size: 13px; }
+
+    .tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+    .tabs button { padding: 10px 24px; border: none; border-radius: 10px; font-size: 14px; cursor: pointer; background: #fff; color: #666; }
+    .tabs button.active { background: #E98B4A; color: #fff; }
+
+    .filter-row { display: flex; gap: 10px; margin-bottom: 16px; align-items: center; }
+    .filter-row select { padding: 8px 12px; border: 1px solid #E5E5E5; border-radius: 8px; font-size: 13px; outline: none; }
+
+    .card { background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.03); display: flex; align-items: center; gap: 14px; }
+    .card .thumb { width: 72px; height: 72px; border-radius: 8px; background: #f0f0f0; object-fit: cover; flex-shrink: 0; }
+    .card .info { flex: 1; min-width: 0; }
+    .card .info .title { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+    .card .info .meta { font-size: 12px; color: #999; }
+    .badge { padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 500; display: inline-block; }
+    .badge-draft { background: #FFF3E0; color: #E67E22; }
+    .badge-published { background: #E8F5E9; color: #2E7D32; }
+    .badge-archived { background: #F5F5F5; color: #999; }
+    .card .actions { display: flex; gap: 6px; flex-shrink: 0; }
+    .card .actions button { padding: 6px 14px; border: none; border-radius: 6px; font-size: 12px; cursor: pointer; }
+    .btn-edit { background: #E3F2FD; color: #1565C0; }
+    .btn-delete { background: #FFEBEE; color: #C62828; }
+
+    .host-card { display: flex; align-items: center; gap: 14px; background: #fff; border-radius: 12px; padding: 16px; margin-bottom: 10px; cursor: pointer; }
+    .host-card:hover { background: #FAFAFA; }
+    .host-card .h-avatar { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; color: #fff; font-weight: 600; flex-shrink: 0; }
+    .host-card .h-name { font-size: 15px; font-weight: 600; }
+
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 99; display: flex; align-items: center; justify-content: center; }
+    .modal { background: #fff; border-radius: 16px; padding: 32px; width: 500px; max-height: 80vh; overflow-y: auto; }
+    .modal h3 { margin-bottom: 20px; font-size: 18px; }
+
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 13px; color: #666; margin-bottom: 5px; font-weight: 500; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 10px 12px; border: 1px solid #E5E5E5; border-radius: 8px; font-size: 14px; outline: none; font-family: inherit; }
+    .form-group textarea { min-height: 70px; resize: vertical; }
+    .form-row { display: flex; gap: 10px; }
+    .form-row .form-group { flex: 1; }
+
+    .upload-zone { border: 2px dashed #ddd; border-radius: 10px; padding: 28px; text-align: center; color: #999; cursor: pointer; font-size: 13px; transition: all .2s; }
+    .upload-zone:hover { border-color: #E98B4A; color: #E98B4A; }
+    .upload-zone.uploading { border-color: #E98B4A; color: #E98B4A; background: #FFF8F0; }
+
+    .btn-primary { padding: 12px 24px; background: #E98B4A; color: #fff; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; }
+    .btn-secondary { padding: 10px 20px; background: #f0f0f0; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; }
+    .btn-full { width: 100%; }
+
+    .empty { text-align: center; padding: 60px 20px; color: #999; font-size: 14px; }
+    .loading { text-align: center; padding: 40px; color: #999; }
+
+    .toast { position: fixed; top: 30px; left: 50%; transform: translateX(-50%); background: #333; color: #fff; padding: 12px 28px; border-radius: 24px; font-size: 14px; z-index: 999; animation: fadeIn .3s; pointer-events: none; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateX(-50%) translateY(-10px); } to { opacity: 1; transform: translateX(-50%) translateY(0); } }
+  </style>
+</head>
+<body>
+
+<div id="view-login" class="login-box">
+  <h1>归她</h1>
+  <p class="subtitle">内容管理后台</p>
+  <input type="text" id="login-username" placeholder="管理员账号" autocomplete="username" />
+  <input type="password" id="login-password" placeholder="登录密码" autocomplete="current-password" />
+  <button onclick="handleLogin()">登录</button>
+  <p id="login-error" class="error" style="display:none"></p>
+</div>
+
+<div id="view-main" style="display:none">
+  <div class="container">
+    <div class="header">
+      <h2>归她 · 管理后台</h2>
+      <span class="user-info" id="current-user"></span>
+      <button onclick="handleLogout()">退出</button>
+    </div>
+
+    <div class="tabs">
+      <button class="active" onclick="switchTab('content')">内容管理</button>
+      <button onclick="switchTab('hosts')">主播管理</button>
+      <button onclick="switchTab('create')">+ 新增内容</button>
+    </div>
+
+    <div id="tab-content">
+      <div class="filter-row">
+        <select id="filter-type" onchange="loadContentList()"><option value="">全部类型</option><option value="live_replay">直播回放</option><option value="recipe">食谱</option></select>
+        <select id="filter-status" onchange="loadContentList()"><option value="">全部状态</option><option value="draft">草稿</option><option value="published">已发布</option><option value="archived">已归档</option></select>
+        <select id="filter-host" onchange="loadContentList()"><option value="">全部主播</option></select>
+      </div>
+      <div id="content-list"><div class="loading">加载中...</div></div>
+    </div>
+
+    <div id="tab-hosts" style="display:none"><div id="hosts-list"><div class="loading">加载中...</div></div></div>
+
+    <div id="tab-create" style="display:none">
+      <div style="background:#fff;border-radius:16px;padding:28px;max-width:600px;margin:0 auto;">
+        <h3 style="margin-bottom:20px;">新增内容</h3>
+        <div style="background:#E8F5E9;border-radius:8px;padding:12px 16px;margin-bottom:20px;font-size:13px;color:#2E7D32;">
+          ✅ 支持任意大小文件上传（自动分片 + 进度条）。
+        </div>
+        <div class="form-group"><label>内容类型 *</label><select id="create-type" onchange="onTypeChange()"><option value="live_replay">直播回放</option><option value="recipe">食谱</option></select></div>
+        <div class="form-group"><label>标题 *</label><input type="text" id="create-title" placeholder="输入内容标题" /></div>
+        <div class="form-group"><label>所属主播 *</label><select id="create-host"></select></div>
+        <div class="form-group"><label>描述</label><textarea id="create-desc" placeholder="内容简介"></textarea></div>
+        <div class="form-row"><div class="form-group"><label>分类</label><input type="text" id="create-category" placeholder="sport" /></div><div class="form-group"><label>标签(逗号分隔)</label><input type="text" id="create-tags" placeholder="入门,跟练" /></div></div>
+        <div class="form-row" id="row-duration"><div class="form-group"><label>时长(秒)</label><input type="number" id="create-duration" value="0" /></div><div class="form-group"><label>排序</label><input type="number" id="create-sort" value="100" /></div></div>
+        <div class="form-group"><label>封面图</label>
+          <div class="upload-zone" id="zone-cover" onclick="document.getElementById('file-cover').click()">📷 点击上传封面图</div>
+          <input type="file" id="file-cover" accept="image/*" style="display:none" onchange="handlePickFile(event,'cover')" />
+          <input type="text" id="create-cover" placeholder="或粘贴 cloud:// 文件ID" style="margin-top:6px" />
+        </div>
+        <div class="form-group"><label id="label-asset">视频文件</label>
+          <div class="upload-zone" id="zone-asset" onclick="document.getElementById('file-asset').click()">📹 点击上传视频</div>
+          <input type="file" id="file-asset" accept="video/*" style="display:none" onchange="handlePickFile(event,'asset')" />
+          <input type="text" id="create-asset" placeholder="或粘贴 cloud:// 文件ID" style="margin-top:6px" />
+        </div>
+        <div class="form-group"><label>状态</label><select id="create-status"><option value="draft">草稿</option><option value="published">已发布</option><option value="archived">已归档</option></select></div>
+        <button class="btn-primary btn-full" onclick="handleCreate()">创建内容</button>
+        <button class="btn-secondary btn-full" style="margin-top:8px" onclick="switchTab('content')">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal-edit-content" class="modal-overlay" style="display:none">
+  <div class="modal"><h3>编辑内容</h3><input type="hidden" id="edit-id" />
+    <div class="form-group"><label>标题</label><input type="text" id="edit-title" /></div>
+    <div class="form-group"><label>描述</label><textarea id="edit-desc"></textarea></div>
+    <div class="form-row"><div class="form-group"><label>分类</label><input type="text" id="edit-category" /></div><div class="form-group"><label>标签</label><input type="text" id="edit-tags" /></div></div>
+    <div class="form-row"><div class="form-group"><label>排序</label><input type="number" id="edit-sort" /></div><div class="form-group"><label>时长(秒)</label><input type="number" id="edit-duration" /></div></div>
+    <div class="form-group"><label>状态</label><select id="edit-status"><option value="draft">草稿</option><option value="published">已发布</option><option value="archived">已归档</option></select></div>
+    <div style="display:flex;gap:10px;margin-top:12px"><button class="btn-primary" onclick="handleUpdate()">保存</button><button class="btn-secondary" onclick="closeModal('modal-edit-content')">取消</button></div>
+  </div>
+</div>
+
+<div id="modal-edit-host" class="modal-overlay" style="display:none">
+  <div class="modal"><h3>编辑主播</h3><input type="hidden" id="host-edit-id" />
+    <div class="form-row"><div class="form-group"><label>slug</label><input type="text" id="host-edit-slug" /></div><div class="form-group"><label>名称</label><input type="text" id="host-edit-name" /></div></div>
+    <div class="form-group"><label>显示名称</label><input type="text" id="host-edit-display" /></div>
+    <div class="form-group"><label>简介</label><textarea id="host-edit-desc"></textarea></div>
+    <div class="form-group"><label>适合人群</label><input type="text" id="host-edit-target" /></div>
+    <div class="form-row"><div class="form-group"><label>主色</label><input type="color" id="host-edit-primary" style="height:38px" /></div><div class="form-group"><label>辅色</label><input type="color" id="host-edit-accent" style="height:38px" /></div><div class="form-group"><label>排序</label><input type="number" id="host-edit-sort" /></div></div>
+    <div class="form-group"><label>状态</label><select id="host-edit-status"><option value="active">启用</option><option value="inactive">停用</option></select></div>
+    <div style="display:flex;gap:10px;margin-top:12px"><button class="btn-primary" onclick="handleUpdateHost()">保存</button><button class="btn-secondary" onclick="closeModal('modal-edit-host')">取消</button></div>
+  </div>
+</div>
+
+<script>
+const ENV_ID = 'cloud1-d2gplb1ikea96e2c8';
+let app = null, authObj = null;
+
+app = cloudbase.init({ env: ENV_ID });
+authObj = app.auth({ persistence: 'local' });
+
+// Auth
+async function handleLogin() {
+  const u = document.getElementById('login-username').value.trim(), p = document.getElementById('login-password').value;
+  if (!u || !p) { showLoginError('请输入账号和密码'); return; }
+  try { await authObj.signInWithPassword({ username: u, password: p }); showMain(); }
+  catch (e) { showLoginError(e.message); }
+}
+async function handleLogout() { await authObj.signOut(); showLogin(); }
+function showLoginError(msg) { const el = document.getElementById('login-error'); el.textContent = msg; el.style.display = 'block'; }
+function showLogin() { document.getElementById('view-login').style.display=''; document.getElementById('view-main').style.display='none'; }
+async function showMain() {
+  document.getElementById('view-login').style.display='none'; document.getElementById('view-main').style.display='';
+  document.getElementById('current-user').textContent = (await authObj.getCurrentUser())?.username || '';
+  switchTab('content');
+}
+
+function toast(msg) { const t = document.createElement('div'); t.className='toast'; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2500); }
+function closeModal(id) { document.getElementById(id).style.display='none'; }
+
+// Tabs
+function switchTab(tab) {
+  ['content','hosts','create'].forEach(t => document.getElementById('tab-'+t).style.display='none');
+  document.querySelectorAll('.tabs button').forEach(b => b.classList.remove('active'));
+  if (tab==='content') { document.getElementById('tab-content').style.display=''; document.querySelector('.tabs button:nth-child(1)').classList.add('active'); loadContentList(); loadHostFilter(); }
+  else if (tab==='hosts') { document.getElementById('tab-hosts').style.display=''; document.querySelector('.tabs button:nth-child(2)').classList.add('active'); loadHostsList(); }
+  else if (tab==='create') { document.getElementById('tab-create').style.display=''; document.querySelector('.tabs button:nth-child(3)').classList.add('active'); loadHostOptions(); }
+}
+
+// Cloud function helper
+async function callAdmin(action, payload) {
+  const res = await app.callFunction({ name: 'admin', data: { action, payload: payload || {} } });
+  if (res.result.code !== 0) throw new Error(res.result.message || '操作失败');
+  return res.result.data;
+}
+
+// Content list
+async function loadContentList() {
+  const c = document.getElementById('content-list'); c.innerHTML = '<div class="loading">加载中...</div>';
+  try {
+    const p = {};
+    const t = document.getElementById('filter-type').value, s = document.getElementById('filter-status').value, h = document.getElementById('filter-host').value;
+    if (t) p.content_type = t; if (s) p.status = s; if (h) p.host_id = h;
+    const d = await callAdmin('listContent', { ...p, page: 1, page_size: 100 });
+    if (!d.list.length) { c.innerHTML = '<div class="empty">暂无内容</div>'; return; }
+    c.innerHTML = d.list.map(it => `<div class="card">
+      ${it.cover_file_id ? `<img class="thumb" src="" data-fid="${it.cover_file_id}" />` : '<div class="thumb" style="background:#fafafa"></div>'}
+      <div class="info"><div class="title">${esc(it.title)}</div><div class="meta"><span>${it.content_type==='live_replay'?'📹回放':'📄食谱'}</span><span>${it.host_slug||''}</span>${it.duration_sec?`<span>${fmtDur(it.duration_sec)}</span>`:''}</div><div class="meta">ID: ${it._id}</div></div>
+      <span class="badge badge-${it.status}">${sl(it.status)}</span>
+      <div class="actions"><button class="btn-edit" onclick="openEditContent('${it._id}')">编辑</button><button class="btn-delete" onclick="handleDelete('${it._id}','${esc(it.title)}')">删除</button></div>
+    </div>`).join('');
+    setTimeout(() => d.list.forEach(it => it.cover_file_id && resolveThumb(it.cover_file_id)), 200);
+  } catch (e) { c.innerHTML = `<div class="empty">${e.message}</div>`; }
+}
+async function resolveThumb(fid) {
+  try { const r = await app.getTempFileURL({ fileList: [fid] }); const u = r.fileList[0]?.tempFileURL; if (u) document.querySelectorAll(`[data-fid="${fid}"]`).forEach(img => img.src = u); } catch (_) {}
+}
+async function loadHostFilter() {
+  try { const d = await callAdmin('listHosts'); document.getElementById('filter-host').innerHTML = '<option value="">全部主播</option>' + d.list.map(h => `<option value="${h._id}">${esc(h.display_name||h.name)}</option>`).join(''); } catch (_) {}
+}
+async function handleDelete(id, title) {
+  if (!confirm(`删除「${title}」？`)) return;
+  try { await callAdmin('deleteContent', { content_id: id }); toast('已删除'); loadContentList(); } catch (e) { toast(e.message); }
+}
+
+// Edit content
+async function openEditContent(id) {
+  try {
+    const d = await callAdmin('getContent', { content_id: id }); const it = d.detail || {};
+    document.getElementById('edit-id').value = id;
+    document.getElementById('edit-title').value = it.title || '';
+    document.getElementById('edit-desc').value = it.description || '';
+    document.getElementById('edit-category').value = it.content_category || '';
+    document.getElementById('edit-tags').value = Array.isArray(it.tags) ? it.tags.join(',') : (it.tags || '');
+    document.getElementById('edit-duration').value = it.duration_sec || 0;
+    document.getElementById('edit-sort').value = it.sort_order || 100;
+    document.getElementById('edit-status').value = it.status || 'draft';
+    document.getElementById('modal-edit-content').style.display = '';
+  } catch (e) { toast(e.message); }
+}
+async function handleUpdate() {
+  try {
+    await callAdmin('updateContent', {
+      content_id: document.getElementById('edit-id').value,
+      title: document.getElementById('edit-title').value.trim(),
+      description: document.getElementById('edit-desc').value.trim(),
+      content_category: document.getElementById('edit-category').value.trim(),
+      tags: document.getElementById('edit-tags').value.split(',').map(t=>t.trim()).filter(Boolean),
+      duration_sec: parseInt(document.getElementById('edit-duration').value)||0,
+      sort_order: parseInt(document.getElementById('edit-sort').value)||100,
+      status: document.getElementById('edit-status').value,
+    });
+    toast('已保存'); closeModal('modal-edit-content'); loadContentList();
+  } catch (e) { toast(e.message); }
+}
+
+// Hosts
+async function loadHostsList() {
+  const c = document.getElementById('hosts-list');
+  try {
+    const d = await callAdmin('listHosts');
+    c.innerHTML = d.list.map(h => `<div class="host-card" onclick="openEditHost('${h._id}')"><div class="h-avatar" style="background:${h.brand_color_primary||'#E98B4A'}">${(h.display_name||h.name||'?')[0]}</div><div style="flex:1"><div class="h-name">${esc(h.display_name||h.name)}</div><div style="font-size:12px;color:#999">slug: ${h.slug}</div></div><span class="badge badge-${h.status==='active'?'published':'archived'}">${h.status==='active'?'启用':'停用'}</span></div>`).join('') || '<div class="empty">暂无主播</div>';
+  } catch (e) { c.innerHTML = '<div class="empty">加载失败</div>'; }
+}
+async function openEditHost(id) {
+  try { const d = await callAdmin('listHosts'); const h = d.list.find(x => x._id===id); if (!h) return;
+    document.getElementById('host-edit-id').value=id; document.getElementById('host-edit-slug').value=h.slug||''; document.getElementById('host-edit-name').value=h.name||''; document.getElementById('host-edit-display').value=h.display_name||''; document.getElementById('host-edit-desc').value=h.description||''; document.getElementById('host-edit-target').value=h.target_user||''; document.getElementById('host-edit-primary').value=h.brand_color_primary||'#F28C48'; document.getElementById('host-edit-accent').value=h.brand_color_accent||'#FFF3E6'; document.getElementById('host-edit-sort').value=h.sort_order||1; document.getElementById('host-edit-status').value=h.status||'active';
+    document.getElementById('modal-edit-host').style.display='';
+  } catch (e) { toast(e.message); }
+}
+async function handleUpdateHost() {
+  try {
+    await callAdmin('updateHost', { host_id: document.getElementById('host-edit-id').value, slug: document.getElementById('host-edit-slug').value.trim(), name: document.getElementById('host-edit-name').value.trim(), display_name: document.getElementById('host-edit-display').value.trim(), description: document.getElementById('host-edit-desc').value.trim(), target_user: document.getElementById('host-edit-target').value.trim(), brand_color_primary: document.getElementById('host-edit-primary').value, brand_color_accent: document.getElementById('host-edit-accent').value, sort_order: parseInt(document.getElementById('host-edit-sort').value)||1, status: document.getElementById('host-edit-status').value });
+    toast('已保存'); closeModal('modal-edit-host'); loadHostsList();
+  } catch (e) { toast(e.message); }
+}
+
+// Create
+function onTypeChange() {
+  const r = document.getElementById('create-type').value === 'live_replay';
+  document.getElementById('row-duration').style.display = r ? '' : 'none';
+  document.getElementById('label-asset').textContent = r ? '视频文件' : '食谱文件';
+  document.getElementById('file-asset').accept = r ? 'video/*' : '*';
+}
+async function loadHostOptions() {
+  try { const d = await callAdmin('listHosts'); document.getElementById('create-host').innerHTML = d.list.map(h => `<option value="${h._id}">${esc(h.display_name||h.name)}</option>`).join(''); } catch (_) {}
+}
+
+// File upload — small files: direct fetch PUT; large files (&gt;30MB): COS SDK slice upload with progress
+async function handlePickFile(e, type) {
+  const file = e.target.files[0]; if (!file) return;
+  const zone = document.getElementById('zone-'+type);
+  zone.classList.add('uploading');
+
+  const ext = file.name.split('.').pop() || 'bin';
+  const cloudPath = `contents/admin-${type}_${Date.now()}.${ext}`;
+
+  try {
+    let fileId;
+
+    if (file.size <= 30 * 1024 * 1024) {
+      // 小文件：单次 PUT
+      zone.textContent = '⏳ 上传中...';
+      const meta = await callAdmin('getUploadMetadata', { cloudPath });
+      const { url, authorization, token, cosFileId } = meta.data;
+      const headers = { 'Authorization': authorization, 'x-cos-meta-fileid': cosFileId };
+      if (token) headers['x-cos-security-token'] = token;
+      const uploadRes = await fetch(url, { method: 'PUT', headers, body: file });
+      if (!uploadRes.ok) throw new Error('HTTP ' + uploadRes.status);
+      fileId = meta.data.fileId;
+    } else {
+      // 大文件：COS SDK 分片上传 + 进度条
+      zone.textContent = '⏳ 准备分片上传...';
+      const sts = await callAdmin('getCosStsCredentials', { cloudPath });
+
+      // 带 scope 限制的临时密钥可能不行，尝试直接用 STS 凭据初始化 COS
+      const cosInst = new COS({
+        SecretId: sts.credentials.secretId,
+        SecretKey: sts.credentials.secretKey,
+        SecurityToken: sts.credentials.token,
+        Protocol: 'https:',
+      });
+
+      const result = await new Promise((resolve, reject) => {
+        cosInst.sliceUploadFile({
+          Bucket: sts.bucket,
+          Region: sts.region,
+          Key: cloudPath,
+          Body: file,
+          onProgress: (info) => {
+            const pct = Math.round(info.percent * 100);
+            const speed = info.speed ? (info.speed / 1024 / 1024).toFixed(1) + 'MB/s' : '';
+            zone.textContent = `⏳ ${pct}% ${speed}`;
+          },
+        }, (err, data) => {
+          if (err) return reject(err);
+          // COS SDK 上传成功，但需要构造 cloud:// fileID
+          // 用 cloudbase SDK 拿 fileID（或从 getUploadMetadata 拿到）
+          resolve(data);
+        });
+      });
+
+      // 再调一次 getUploadMetadata 获取 fileID
+      const meta2 = await callAdmin('getUploadMetadata', { cloudPath });
+      fileId = meta2.data.fileId;
+    }
+
+    document.getElementById('create-'+type).value = fileId;
+    zone.textContent = '✅ ' + file.name + ' 上传成功';
+    zone.classList.remove('uploading');
+
+    // 视频自动检测时长
+    if (type === 'asset' && file.type.startsWith('video/')) {
+      const v = document.createElement('video'); v.preload='metadata';
+      v.onloadedmetadata = () => { const d = Math.round(v.duration); if (d>0) document.getElementById('create-duration').value = d; URL.revokeObjectURL(v.src); };
+      v.src = URL.createObjectURL(file);
+    }
+  } catch (e) {
+    zone.textContent = '❌ ' + (e.message || e.error || e);
+    zone.classList.remove('uploading');
+    toast('上传失败: ' + (e.message || e));
+  }
+}
+
+async function handleCreate() {
+  const title = document.getElementById('create-title').value.trim();
+  if (!title) { toast('请输入标题'); return; }
+  try {
+    await callAdmin('createContent', {
+      content_type: document.getElementById('create-type').value,
+      host_id: document.getElementById('create-host').value,
+      title, description: document.getElementById('create-desc').value.trim(),
+      content_category: document.getElementById('create-category').value.trim(),
+      tags: document.getElementById('create-tags').value.split(',').map(t=>t.trim()).filter(Boolean),
+      duration_sec: parseInt(document.getElementById('create-duration').value)||0,
+      sort_order: parseInt(document.getElementById('create-sort').value)||100,
+      cover_file_id: document.getElementById('create-cover').value.trim(),
+      asset_file_id: document.getElementById('create-asset').value.trim(),
+      status: document.getElementById('create-status').value,
+    });
+    toast('创建成功！');
+    ['create-title','create-desc','create-category','create-tags','create-cover','create-asset'].forEach(id => document.getElementById(id).value='');
+    document.getElementById('create-duration').value='0'; document.getElementById('create-sort').value='100';
+    ['cover','asset'].forEach(t => { const z = document.getElementById('zone-'+t); z.textContent = t==='cover'?'📷 点击上传封面图':'📹 点击上传视频'; z.classList.remove('uploading'); });
+    switchTab('content');
+  } catch (e) { toast(e.message); }
+}
+
+// Helpers
+function esc(s) { return s?.replace(/</g,'&lt;').replace(/>/g,'&gt;')||''; }
+function sl(s) { return {draft:'草稿',published:'已发布',archived:'已归档'}[s]||s; }
+function fmtDur(s) { const m=Math.floor(s/60); return `${m}:${String(s%60).padStart(2,'0')}`; }
+
+authObj.getLoginState().then(s => { if (s) showMain(); }).catch(()=>{});
+</script>
+</body>
+</html>

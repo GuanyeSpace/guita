@@ -1,10 +1,73 @@
 .container {
+  min-height: 100vh;
+  background-color: #F8F6F3;
+}
+
+.center {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  min-height: 60vh;
+  padding: 40rpx;
 }
-.placeholder {
-  font-size: 32rpx;
-  color: #999999;
+
+.status-text {
+  font-size: 28rpx;
+  color: #999;
+}
+
+.error-text {
+  font-size: 28rpx;
+  color: #E98B4A;
+  margin-bottom: 30rpx;
+  text-align: center;
+}
+
+.actions {
+  display: flex;
+  gap: 20rpx;
+}
+
+.retry-btn {
+  width: 160rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  font-size: 26rpx;
+  color: #fff;
+  background-color: #E98B4A;
+  border-radius: 32rpx;
+  text-align: center;
+  padding: 0;
+}
+
+.back-btn {
+  width: 160rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  font-size: 26rpx;
+  color: #999;
+  background-color: #fff;
+  border: 1rpx solid #ddd;
+  border-radius: 32rpx;
+  text-align: center;
+  padding: 0;
+}
+
+.image-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx;
+}
+
+.preview-image {
+  width: 100%;
+  border-radius: 12rpx;
+}
+
+.tip {
+  margin-top: 30rpx;
+  font-size: 24rpx;
+  color: #999;
 }

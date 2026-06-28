@@ -1,5 +1,5 @@
 import { callFunction } from '../../utils/request'
-import { navigateToAuth, switchToReplayList, switchToRecipeList } from '../../utils/route'
+import { navigateToAuth, navigateToHostSelect, switchToReplayList, switchToRecipeList } from '../../utils/route'
 import type { GetMyHostData, ContentListData } from '../../types/cloud'
 import { formatDate, formatDuration } from '../../utils/format'
 import { track } from '../../utils/track'
@@ -7,6 +7,9 @@ import { track } from '../../utils/track'
 interface IApp {
   globalData: {
     homeNeedsRefresh: boolean
+    userStatus: string
+    selectedHostId: string
+    selectedHost: Record<string, unknown> | null
   }
 }
 
@@ -32,6 +35,7 @@ Page({
     loading: true,
     error: '',
     guest: false,
+    guestNeedSelect: false,
     host: null as Record<string, unknown> | null,
     replays: [] as Record<string, unknown>[],
     recipes: [] as Record<string, unknown>[],
@@ -57,7 +61,7 @@ Page({
 
     if (app.globalData.homeNeedsRefresh) {
       app.globalData.homeNeedsRefresh = false
-      this.silentRefresh()
+      this.loadHome() // 游客切主播后需要全量刷新
     }
   },
 
@@ -68,7 +72,49 @@ Page({
     })
   },
 
-  /* ========== 共享数据拉取（loadHome & silentRefresh 共用） ========== */
+  /* ========== 游客模式：按选中的 host_id 拉取内容 ========== */
+  async _fetchGuestHomeData(hostId: string, hostInfo: Record<string, unknown> | null): Promise<HomeData> {
+    const [replayRes, recipeRes] = await Promise.all([
+      callFunction<ContentListData>({
+        name: 'content',
+        action: 'list',
+        payload: { content_type: 'live_replay', host_id: hostId, page: 1, page_size: 3 },
+      }),
+      callFunction<ContentListData>({
+        name: 'content',
+        action: 'list',
+        payload: { content_type: 'recipe', host_id: hostId, page: 1, page_size: 3 },
+      }),
+    ])
+
+    const replays = replayRes.data.list as Record<string, unknown>[]
+    const recipes = recipeRes.data.list as Record<string, unknown>[]
+
+    replays.forEach((item) => {
+      const raw = item.duration_sec
+      const sec = typeof raw === 'number' ? raw : Number(raw)
+      item.displayDuration = (sec > 0) ? formatDuration(sec) : ''
+      item._coverError = false
+    })
+    recipes.forEach((item) => {
+      item._coverError = false
+    })
+
+    await Promise.all([
+      ...replays.map(resolveCover),
+      ...recipes.map(resolveCover),
+    ])
+
+    return {
+      host: hostInfo,
+      replays,
+      recipes,
+      replaysEmpty: replays.length === 0,
+      recipesEmpty: recipes.length === 0,
+    }
+  },
+
+  /* ========== 登录模式：按绑定关系拉取 ========== */
   async _fetchHomeData(): Promise<HomeData> {
     const hostRes = await callFunction<GetMyHostData>({
       name: 'host',
@@ -93,7 +139,6 @@ Page({
     const replays = replayRes.data.list as Record<string, unknown>[]
     const recipes = recipeRes.data.list as Record<string, unknown>[]
 
-    // 计算回放时长显示字段
     replays.forEach((item) => {
       const raw = item.duration_sec
       const sec = typeof raw === 'number' ? raw : Number(raw)
@@ -104,7 +149,6 @@ Page({
       item._coverError = false
     })
 
-    // 并行加载封面图
     await Promise.all([
       ...replays.map(resolveCover),
       ...recipes.map(resolveCover),
@@ -119,10 +163,33 @@ Page({
     }
   },
 
-    /* ========== 全量加载（首次 / 下拉刷新，显示骨架屏） ========== */
+  /* ========== 全量加载 ========== */
   async loadHome() {
-    this.setData({ loading: true, error: '', guest: false })
+    this.setData({ loading: true, error: '', guest: false, guestNeedSelect: false })
 
+    const app = getApp<IApp>()
+
+    // 游客模式：有选中主播 → 直接拉内容
+    if (app.globalData.selectedHostId) {
+      try {
+        const data = await this._fetchGuestHomeData(
+          app.globalData.selectedHostId,
+          app.globalData.selectedHost,
+        )
+        this.setData({ loading: false, guest: true, ...data })
+        this._dataLoaded = true
+        if (data.host) {
+          track('guita.home.view', { host_id: (data.host as Record<string, unknown>)._id as string, guest: true })
+        }
+        return
+      } catch (_) {
+        // 游客拉取失败降级
+        this.setData({ loading: false, error: '刚刚网络有点慢，再试一次好么？' })
+        return
+      }
+    }
+
+    // 登录模式
     try {
       const data = await this._fetchHomeData()
 
@@ -138,9 +205,9 @@ Page({
     } catch (e) {
       const msg = (e as Error).message || '刚刚网络有点慢，再试一次好么？'
 
-      // 游客态：未登录/未绑定时不强制跳转，展示引导入口
+      // 游客态：未登录/未绑定时 → 引导选主播
       if (msg.includes('暂未绑定主播') || msg.includes('请先绑定手机号') || msg.includes('用户不存在')) {
-        this.setData({ loading: false, guest: true, host: null, replays: [], recipes: [], replaysEmpty: true, recipesEmpty: true })
+        this.setData({ loading: false, guestNeedSelect: true, host: null, replays: [], recipes: [], replaysEmpty: true, recipesEmpty: true })
         this._dataLoaded = true
         return
       }
@@ -149,17 +216,26 @@ Page({
     }
   },
 
-  /* ========== 静默刷新（无骨架屏，保留现有数据直至新数据就绪） ========== */
+  /* ========== 静默刷新 ========== */
   async silentRefresh() {
+    const app = getApp<IApp>()
     try {
-      const data = await this._fetchHomeData()
-      this.setData(data)
+      if (app.globalData.selectedHostId) {
+        const data = await this._fetchGuestHomeData(
+          app.globalData.selectedHostId,
+          app.globalData.selectedHost,
+        )
+        this.setData({ guest: true, ...data })
+      } else {
+        const data = await this._fetchHomeData()
+        this.setData(data)
+      }
     } catch (_) {
-      // 静默刷新失败不提示，保留现有数据
+      // 静默刷新失败不提示
     }
   },
 
-  /* ========== 事件处理（不变） ========== */
+  /* ========== 事件处理 ========== */
   onCoverError(e: WechatMiniprogram.TouchEvent) {
     const id = e.currentTarget.dataset.id as string
     const type = e.currentTarget.dataset.type as string
@@ -177,6 +253,17 @@ Page({
 
   onGoLogin() {
     navigateToAuth()
+  },
+
+  onGoSelectHost() {
+    navigateToHostSelect()
+  },
+
+  onSwitchHost() {
+    const app = getApp<IApp>()
+    app.globalData.selectedHostId = ''
+    app.globalData.selectedHost = null
+    navigateToHostSelect()
   },
 
   onViewAllReplays() {

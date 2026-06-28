@@ -110,3 +110,42 @@
   color: #CCCCCC;
   line-height: 1.5;
 }
+
+/* 游客登录引导占位 */
+.guest-placeholder {
+  flex-direction: column;
+  background: linear-gradient(180deg, #1A1A1A 0%, #2A2520 100%);
+}
+.placeholder-icon {
+  font-size: 64rpx;
+  opacity: 0.3;
+  margin-bottom: 24rpx;
+}
+.placeholder-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin-bottom: 8rpx;
+}
+.placeholder-desc {
+  font-size: 24rpx;
+  color: #999999;
+  margin-bottom: 32rpx;
+  text-align: center;
+  padding: 0 40rpx;
+  line-height: 1.5;
+}
+.guest-login-btn-sm {
+  width: 280rpx;
+  height: 72rpx;
+  line-height: 72rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #FFFFFF;
+  background: linear-gradient(135deg, #E98B4A, #F28C48);
+  border-radius: 36rpx;
+  border: none;
+}
+.guest-login-btn-sm::after {
+  border: none;
+}

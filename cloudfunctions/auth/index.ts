@@ -62,7 +62,8 @@ async function handleLogin() {
   }
 
   if (user.status === 'inactive' || user.status === 'banned' || user.status === 'deleted') {
-    return { code: 0, message: 'ok', data: { user, status: 'inactive' } }
+    const blockedStatus = user.status === 'banned' ? 'banned' : 'inactive'
+    return { code: 0, message: 'ok', data: { user, status: blockedStatus } }
   }
 
   if (!user.phone) {

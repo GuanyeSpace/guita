@@ -168,7 +168,7 @@
   margin-bottom: 40rpx;
   padding: 0 24rpx;
 }
-.guest-login-btn {
+.guest-select-btn {
   width: 360rpx;
   height: 88rpx;
   line-height: 88rpx;
@@ -180,6 +180,54 @@
   border: none;
   box-shadow: 0 4rpx 12rpx rgba(233, 139, 74, 0.3);
 }
+.guest-select-btn::after {
+  border: none;
+}
+.guest-divider {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 360rpx;
+  margin: 32rpx 0;
+}
+.guest-divider-line {
+  flex: 1;
+  height: 1rpx;
+  background-color: #ECE8E2;
+}
+.guest-divider-text {
+  font-size: 24rpx;
+  color: #A8A099;
+  margin: 0 20rpx;
+}
+.guest-login-btn {
+  width: 360rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  font-size: 30rpx;
+  font-weight: 500;
+  color: #F28C48;
+  background-color: #FFFFFF;
+  border: 1rpx solid #F28C48;
+  border-radius: 44rpx;
+}
 .guest-login-btn::after {
   border: none;
+}
+
+/* ===== 游客浏览中：问候区 ===== */
+.greeting-guest {
+  /* 覆盖原有样式，稍弱化 */
+}
+.guest-tag {
+  color: #F28C48;
+  border-color: #F28C48;
+}
+.switch-host-link {
+  flex-shrink: 0;
+  padding: 8rpx 0 8rpx 16rpx;
+}
+.switch-host-text {
+  font-size: 24rpx;
+  color: #F28C48;
 }

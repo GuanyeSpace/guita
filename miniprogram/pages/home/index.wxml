@@ -55,23 +55,34 @@
     <button class="g-retry-btn" bindtap="onRetry">重试</button>
   </view>
 
-  <!-- ===== 游客引导（未登录/未绑定） ===== -->
-  <view wx:elif="{{guest}}" class="g-center">
+  <!-- ===== 游客引导：未选主播 ===== -->
+  <view wx:elif="{{guestNeedSelect}}" class="g-center">
     <view class="guest-icon-area">
-      <text class="guest-icon">👋</text>
+      <text class="guest-icon">👩‍🏫</text>
     </view>
-    <text class="guest-title">登录后查看专属内容</text>
-    <text class="guest-desc">绑定手机号并选择老师，即可查看直播回放与精选食谱</text>
-    <button class="guest-login-btn" bindtap="onGoLogin">立即登录</button>
+    <text class="guest-title">选择一位老师开始浏览</text>
+    <text class="guest-desc">选择后可预览该老师的直播回放和食谱，无需登录</text>
+    <button class="guest-select-btn" bindtap="onGoSelectHost">去选择老师</button>
+    <view class="guest-divider">
+      <view class="guest-divider-line"></view>
+      <text class="guest-divider-text">或</text>
+      <view class="guest-divider-line"></view>
+    </view>
+    <button class="guest-login-btn" bindtap="onGoLogin">登录以绑定老师</button>
   </view>
 
-  <!-- ===== 正常内容 ===== -->
+  <!-- ===== 内容区（游客/登录共用） ===== -->
   <view wx:else class="g-content-padded content">
     <!-- 顶部问候区 -->
-    <view class="greeting">
+    <view wx:if="{{!guest}}" class="greeting">
       <text class="greeting-eyebrow">欢迎回来</text>
       <text class="greeting-title">你的专属内容已准备好</text>
       <text class="greeting-sub">跟随 <text class="greeting-host">{{host.display_name}}</text>，轻松查看回放与食谱</text>
+    </view>
+    <view wx:else class="greeting greeting-guest">
+      <text class="greeting-eyebrow">正在预览</text>
+      <text class="greeting-title">{{host.display_name}} 的内容</text>
+      <text class="greeting-sub">登录后可彻底绑定该老师</text>
     </view>
 
     <!-- 主播信息卡片 -->
@@ -84,8 +95,12 @@
         <text class="teacher-desc">{{host.description}}</text>
         <view class="teacher-tags">
           <text class="g-tag">{{host.target_user}}</text>
-          <text class="g-tag g-tag-checked">✓ 已绑定</text>
+          <text wx:if="{{!guest}}" class="g-tag g-tag-checked">✓ 已绑定</text>
+          <text wx:else class="g-tag guest-tag">试用中</text>
         </view>
+      </view>
+      <view wx:if="{{guest}}" class="switch-host-link" bindtap="onSwitchHost">
+        <text class="switch-host-text">换一个 ›</text>
       </view>
     </view>
 

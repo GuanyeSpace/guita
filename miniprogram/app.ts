@@ -6,6 +6,10 @@ App({
     homeNeedsRefresh: false,
     /** 用户登录状态（静默获取后缓存） */
     userStatus: '' as string,
+    /** 游客临时选中的主播 ID（本地态，不写库） */
+    selectedHostId: '' as string,
+    /** 游客临时选中的主播信息 */
+    selectedHost: null as Record<string, unknown> | null,
   },
 
   onLaunch() {

@@ -1,3 +1,32 @@
 <view class="container">
-  <text class="placeholder">文件预览页</text>
+  <view wx:if="{{loading}}" class="center">
+    <text class="status-text">正在加载...</text>
+  </view>
+
+  <view wx:elif="{{error}}" class="center">
+    <text class="error-text">{{error}}</text>
+    <view class="actions">
+      <button class="retry-btn" bindtap="onRetry">重试</button>
+      <button class="back-btn" bindtap="onGoBack">返回</button>
+    </view>
+  </view>
+
+  <block wx:else>
+    <!-- 图片预览 -->
+    <view wx:if="{{type === 'image'}}" class="image-preview">
+      <image
+        class="preview-image"
+        src="{{url}}"
+        mode="widthFix"
+        show-menu-by-longpress="{{true}}"
+        bindtap="onPreviewImage"
+      />
+      <view class="tip">点击查看大图</view>
+    </view>
+
+    <!-- PDF / 其他文件：自动触发打开 -->
+    <view wx:else class="center">
+      <text class="status-text">正在打开文件...</text>
+    </view>
+  </block>
 </view>

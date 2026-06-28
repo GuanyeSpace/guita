@@ -29,3 +29,7 @@ export function switchToRecipeList() {
 export function switchToProfile() {
   wx.switchTab({ url: '/pages/profile/index' })
 }
+
+export function navigateToHostSelect() {
+  wx.navigateTo({ url: '/pages/host-select/index' })
+}

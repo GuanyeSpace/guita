@@ -1,14 +1,23 @@
 import { callFunction } from '../../../utils/request'
+import { navigateToAuth } from '../../../utils/route'
 import type { ContentDetailData } from '../../../types/cloud'
 import { formatDate, formatDuration } from '../../../utils/format'
 import { track } from '../../../utils/track'
 import { recordContent } from '../../../utils/record'
+
+interface IApp {
+  globalData: {
+    selectedHostId: string
+    homeNeedsRefresh: boolean
+  }
+}
 
 Page({
   data: {
     loading: true,
     error: '',
     inaccessible: false,
+    guest: false,
     contentId: '',
     detail: null as Record<string, unknown> | null,
     videoSrc: '',
@@ -16,60 +25,70 @@ Page({
     formatDuration,
   },
 
+  _hostId: '',
+
   onLoad(options: Record<string, string | undefined>) {
     const id = options.id
     if (!id) {
-      this.setData({ loading: false, inaccessible: true, error: '该内容暂不可访问。' })
+      this.setData({ loading: false, inaccessible: true })
       return
     }
+    const app = getApp<IApp>()
+    this._hostId = app.globalData.selectedHostId
     this.setData({ contentId: id })
     this.loadDetail(id)
   },
 
   async loadDetail(id: string) {
-    this.setData({ loading: true, error: '', inaccessible: false })
+    this.setData({ loading: true, error: '', inaccessible: false, guest: false })
+
+    const app = getApp<IApp>()
+    this._hostId = app.globalData.selectedHostId
+    const isGuest = !!this._hostId
+
+    const payload: Record<string, unknown> = { content_id: id, content_type: 'live_replay' }
+    if (isGuest) payload.host_id = this._hostId
 
     try {
       const res = await callFunction<ContentDetailData>({
         name: 'content',
         action: 'detail',
-        payload: { content_id: id, content_type: 'live_replay' },
+        payload,
       })
 
       const detail = res.data.detail as Record<string, unknown>
 
+      // 游客模式：不加载视频（需登录后可完整播放），不记录观看
       let videoSrc = ''
-      if (detail.asset_url) {
-        videoSrc = detail.asset_url as string
-      } else if (detail.asset_file_id) {
-        try {
-          const tempRes = await wx.cloud.getTempFileURL({
-            fileList: [detail.asset_file_id as string],
-          })
-          const file = tempRes.fileList[0]
-          if (file.tempFileURL) {
-            videoSrc = file.tempFileURL
-          }
-        } catch (_) {
-          // videoSrc stays empty
+      if (!isGuest) {
+        if (detail.asset_url) {
+          videoSrc = detail.asset_url as string
+        } else if (detail.asset_file_id) {
+          try {
+            const tempRes = await wx.cloud.getTempFileURL({
+              fileList: [detail.asset_file_id as string],
+            })
+            const file = tempRes.fileList[0]
+            if (file.tempFileURL) videoSrc = file.tempFileURL
+          } catch (_) { /* skip */ }
         }
       }
 
-      this.setData({ loading: false, detail, videoSrc })
+      this.setData({ loading: false, detail, videoSrc, guest: isGuest })
 
       track('guita.content.replay_open', {
         host_id: detail.host_id as string,
         content_id: id,
+        guest: isGuest,
       })
 
-      recordContent(id, 'view', { progressSec: 0 })
-
-      const app = getApp<{ globalData: { homeNeedsRefresh: boolean } }>()
-      app.globalData.homeNeedsRefresh = true
+      if (!isGuest) {
+        recordContent(id, 'view', { progressSec: 0 })
+        app.globalData.homeNeedsRefresh = true
+      }
     } catch (e) {
       const msg = (e as Error).message || '刚刚网络有点慢，再试一次好么？'
 
-      // 游客态：不强制跳转，展示不可访问提示
       if (msg.includes('暂未绑定主播') || msg.includes('请先绑定手机号') || msg.includes('用户不存在')) {
         this.setData({ loading: false, inaccessible: true })
         return
@@ -87,6 +106,10 @@ Page({
     if (this.data.contentId) {
       this.loadDetail(this.data.contentId)
     }
+  },
+
+  onGoLogin() {
+    navigateToAuth()
   },
 
   onGoBack() {

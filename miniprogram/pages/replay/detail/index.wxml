@@ -17,7 +17,7 @@
     <!-- 竖屏视频区域 -->
     <view class="video-section">
       <video
-        wx:if="{{videoSrc}}"
+        wx:if="{{videoSrc && !guest}}"
         class="video"
         src="{{videoSrc}}"
         controls
@@ -27,6 +27,12 @@
         show-play-btn="{{true}}"
         enable-progress-gesture
       />
+      <view wx:elif="{{guest}}" class="video-placeholder guest-placeholder">
+        <text class="placeholder-icon">▶</text>
+        <text class="placeholder-title">登录后可完整播放</text>
+        <text class="placeholder-desc">绑定手机号并选择老师后即可观看完整回放</text>
+        <button class="guest-login-btn-sm" bindtap="onGoLogin">立即登录</button>
+      </view>
       <view wx:else class="video-placeholder">
         <text class="placeholder-text">暂时无法播放该回放，请稍后再试。</text>
       </view>

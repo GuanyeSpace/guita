@@ -1,8 +1,16 @@
 import { callFunction } from '../../../utils/request'
-import { navigateToAuth } from '../../../utils/route'
+import { navigateToAuth, navigateToHostSelect } from '../../../utils/route'
 import type { ContentListData } from '../../../types/cloud'
 import { formatDate, formatDuration } from '../../../utils/format'
 import { track } from '../../../utils/track'
+
+interface IApp {
+  globalData: {
+    selectedHostId: string
+    selectedHost: Record<string, unknown> | null
+    userStatus: string
+  }
+}
 
 async function resolveCover(item: Record<string, unknown>): Promise<void> {
   if (item.cover_file_id) {
@@ -13,7 +21,6 @@ async function resolveCover(item: Record<string, unknown>): Promise<void> {
   }
 }
 
-/** 给列表项预处理 model 字段 */
 function prepareItems(items: Record<string, unknown>[]) {
   items.forEach((item) => {
     const raw = item.duration_sec
@@ -30,6 +37,7 @@ Page({
     refreshing: false,
     error: '',
     guest: false,
+    guestNeedSelect: false,
     list: [] as Record<string, unknown>[],
     page: 1,
     pageSize: 20,
@@ -39,7 +47,11 @@ Page({
     formatDuration,
   },
 
+  _hostId: '',
+
   onLoad() {
+    const app = getApp<IApp>()
+    this._hostId = app.globalData.selectedHostId
     this.loadFirstPage()
   },
 
@@ -53,20 +65,31 @@ Page({
   },
 
   loadFirstPage() {
-    this.setData({ loading: true, error: '' })
+    this.setData({ loading: true, error: '', guest: false, guestNeedSelect: false })
     this.doLoad(1, false)
   },
 
   async doLoad(page: number, isRefresh: boolean) {
+    const app = getApp<IApp>()
+    this._hostId = app.globalData.selectedHostId
+
+    // 游客模式：传 host_id
+    const payload: Record<string, unknown> = {
+      content_type: 'live_replay', page, page_size: this.data.pageSize,
+    }
+    const isGuest = !!this._hostId
+    if (isGuest) payload.host_id = this._hostId
+
     try {
       const res = await callFunction<ContentListData>({
         name: 'content',
         action: 'list',
-        payload: { content_type: 'live_replay', page, page_size: this.data.pageSize },
+        payload,
       })
 
       const newList = res.data.list as Record<string, unknown>[]
       prepareItems(newList)
+      if (isGuest) this.setData({ guest: true })
       await Promise.all(newList.map(resolveCover))
 
       const list = page === 1 ? newList : [...this.data.list, ...newList]
@@ -86,18 +109,18 @@ Page({
       if (page === 1) {
         track('guita.content.replay_list_view', {
           host_id: list.length > 0 ? (list[0].host_id as string) : undefined,
+          guest: isGuest,
         })
       }
     } catch (e) {
       const msg = (e as Error).message || '刚刚网络有点慢，再试一次好么？'
 
-      // 游客态：未登录/未绑定时不强制跳转
       if (msg.includes('暂未绑定主播') || msg.includes('请先绑定手机号') || msg.includes('用户不存在')) {
         this.setData({
           loading: false,
           refreshing: false,
           loadingMore: false,
-          guest: true,
+          guestNeedSelect: true,
           list: [],
         })
         wx.stopPullDownRefresh()
@@ -135,6 +158,10 @@ Page({
 
   onGoLogin() {
     navigateToAuth()
+  },
+
+  onGoSelectHost() {
+    navigateToHostSelect()
   },
 
   onTapItem(e: WechatMiniprogram.BaseEvent) {

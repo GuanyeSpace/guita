@@ -58,3 +58,10 @@ export interface ContentListData {
 export interface ContentDetailData {
   detail: Record<string, unknown>
 }
+
+export interface ContentRecordParams {
+  content_id: string
+  record_type: 'view' | 'play' | 'progress' | 'complete' | 'preview'
+  progress_sec?: number
+  completed?: boolean
+}

@@ -26,9 +26,13 @@
     </view>
 
     <view class="file-section">
-      <button wx:if="{{hasFile}}" class="file-btn" bindtap="onOpenFile">
+      <button wx:if="{{hasFile && !guest}}" class="file-btn" bindtap="onOpenFile">
         查看食谱文件
       </button>
+      <view wx:elif="{{guest}}" class="guest-file-cta">
+        <text class="guest-file-text">登录后可查看完整食谱文件</text>
+        <button class="guest-file-btn" bindtap="onGoLogin">立即登录</button>
+      </view>
       <text wx:else class="no-file">暂时没有可预览的食谱文件。</text>
     </view>
 
